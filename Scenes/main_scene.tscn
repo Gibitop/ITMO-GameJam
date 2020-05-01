@@ -4,11 +4,12 @@
 [ext_resource path="res://Scripts/main_scene.gd" type="Script" id=3]
 
 [node name="Spatial" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.04789, 2.44893, -3.74794 )
 script = ExtResource( 3 )
 
 [node name="CSGTorus" type="CSGTorus" parent="."]
-transform = Transform( 10.2423, 0, -0.860433, 0, 10.2784, 0, 0.860433, 0, 10.2423, 0, 0, 0 )
-inner_radius = 2.87446
+inner_radius = 100.0
+outer_radius = 110.0
 sides = 64
 material = ExtResource( 1 )
 
