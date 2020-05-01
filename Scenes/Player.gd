@@ -6,7 +6,7 @@ var health = MAX_HEALTH;
 
 export(int) var DASHING_TIME = 333 # millis
 var dashing = false
-var dashing_start_time
+var dashing_start_time = 0.0
 var dashing_target: Spatial
 
 
@@ -30,19 +30,21 @@ func _die():
 	
 func dash(target):
 	print("Player dashing to " + str(target.translation))
-	dashing_start_time = OS.get_ticks_msec()
+	dashing_start_time = 0
+	#print(OS.get_ticks_msec())
 	dashing = true
 	dashing_target = target
 
 func _process(delta):
 	if dashing:
-		var estimated_time = DASHING_TIME - (OS.get_ticks_msec() - dashing_start_time)
+		dashing_start_time = dashing_start_time + delta
+		var estimated_time = DASHING_TIME - dashing_start_time
 		if estimated_time <= 0:
 			dashing = false
 			print("Dashed to " + str(translation))
 		else:
 			var estimated_distance = translation.distance_to(dashing_target.translation)
-			var speed = estimated_distance / estimated_time # units/millis
+			var speed = estimated_distance / estimated_time * delta * 1000 # units/millis
 			var direction = (dashing_target.translation - translation).normalized()
 			transform = transform.translated(direction * speed)
 		
