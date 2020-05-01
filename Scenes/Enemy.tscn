@@ -6,7 +6,6 @@
 
 [node name="Enemy" type="Spatial"]
 script = ExtResource( 1 )
-speed = 1000.0
 mutationChanse = 50.0
 
 [node name="RigidBody" type="RigidBody" parent="."]

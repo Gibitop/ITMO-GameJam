@@ -4,7 +4,7 @@ onready var player_scene = preload("res://Scenes/Player.tscn")
 onready var enemy_scene = preload("res://Scenes/Enemy.tscn")
 onready var enemy = preload("res://Scripts/Enemy.gd")
 
-var player
+var player: Spatial
 var enemies
 
 # Called when the node enters the scene tree for the first time.
@@ -15,6 +15,27 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func _physics_process(delta):
+	var nearest_enemy = _find_nearest_enemy_to_cursor(_get_cursor_world_position())
+	#if nearest_enemy.isMutated():
+	(player.get_node("PlayerBody") as Spatial).look_at_from_position(Vector3(0, 0, 0), nearest_enemy.translation, Vector3(0, 1, 0))
+	print(nearest_enemy.name)
+	
+	
+func _get_cursor_world_position():
+	var cursor_position = get_viewport().get_mouse_position()
+	return $Camera.project_position(cursor_position, $Camera.translation.y)
+
+func _find_nearest_enemy_to_cursor(cursor_position):
+	var min_dist = 10000000
+	var nearest_enemy: Spatial
+	for enemy in enemies:
+		var distance = enemy.translation.distance_to(cursor_position)
+		if distance < min_dist:
+			min_dist = distance
+			nearest_enemy = enemy
+	return nearest_enemy
 
 func _input(event):
 	if event is InputEventKey:

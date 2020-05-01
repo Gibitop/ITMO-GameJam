@@ -46,3 +46,7 @@ func _mutate():
 		if distance < 5 and rand <= mutationChanse:
 			mutated = true
 			body.material = harmles
+
+func highlight():
+	body.material = null
+	
