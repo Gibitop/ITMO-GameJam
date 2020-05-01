@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var player_scene = preload("res://Scenes/Character.tscn")
+onready var player_scene = preload("res://Scenes/Player.tscn")
 onready var enemy_scene = preload("res://Scenes/Enemy.tscn")
 onready var enemy = preload("res://Scripts/Enemy.gd")
 

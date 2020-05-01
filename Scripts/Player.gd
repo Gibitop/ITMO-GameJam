@@ -36,6 +36,10 @@ func dash(target):
 	dashing_target = target
 
 func _process(delta):
+	
+	#var ray = $Camera.project_position(get_viewport().get_mouse_position(), 44)
+	#print(ray)
+	#translation = ray
 	if dashing:
 		dashing_start_time = dashing_start_time + delta
 		var estimated_time = DASHING_TIME - dashing_start_time
