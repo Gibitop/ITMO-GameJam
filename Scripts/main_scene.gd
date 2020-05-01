@@ -12,7 +12,6 @@ func _ready():
 	player = spawn_player(Vector3(0, 0, 0))
 	enemies = spawn_enemies(5, player)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -22,19 +21,17 @@ func spawn_player(pos:Vector3):
 	var player_inst = player_scene.instance()
 	add_child(player_inst)
 	player_inst.global_translate(pos)
-	return player_inst
 	print("Player spawned succsessfully at position " + str(pos))
 	return player_inst
-	
 
 func spawn_enemies(count, player_inst):
 	var result = []
 	for i in range(count):
 		var pos: Vector3 = _get_enemy_position(30.0)
 		var enemy_inst = enemy_scene.instance()
-		enemy_inst.global_translate(pos)
 		result.append(enemy_inst)
 		add_child(enemy_inst)
+		enemy_inst.global_translate(pos)
 		enemy_inst.set_player(player_inst)
 		enemy_inst.activate()
 		print("Enemy spawned at " + str(pos))

@@ -42,7 +42,7 @@ func _mutate():
 	if !mutated:
 		var distance = (player.translation - translation).length()
 		var rand = randf()
-		print(rand)
+		#print(rand)
 		if distance < 5 and rand <= mutationChanse:
 			mutated = true
 			body.material = harmles
