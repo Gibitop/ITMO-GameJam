@@ -16,6 +16,11 @@ func _ready():
 func _process(delta):
 	pass
 
+func _input(event):
+	if event is InputEventKey:
+		if event.get_scancode_with_modifiers() == KEY_Q:
+			player.dash(enemies[randi() % len(enemies)])
+
 # Spawns player on pos
 func spawn_player(pos:Vector3):
 	var player_inst = player_scene.instance()
