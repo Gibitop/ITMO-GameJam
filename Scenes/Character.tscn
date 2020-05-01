@@ -1,0 +1,6 @@
+[gd_scene format=2]
+
+[node name="Player" type="Spatial"]
+
+[node name="PlayerBody" type="CSGCylinder" parent="."]
+sides = 64

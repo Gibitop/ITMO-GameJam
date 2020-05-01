@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://materials/arena.tres" type="Material" id=1]
+[ext_resource path="res://Scenes/main_scene.gd" type="Script" id=3]
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="CSGTorus" type="CSGTorus" parent="."]
+transform = Transform( 10.2423, 0, -0.860433, 0, 10.2784, 0, 0.860433, 0, 10.2423, 0, 0, 0 )
+inner_radius = 2.87446
+sides = 64
+material = ExtResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 36.3056, 0 )
+current = true
+fov = 79.9
