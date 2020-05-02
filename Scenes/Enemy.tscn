@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://materials/arena.tres" type="Material" id=2]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -15,3 +16,9 @@ gravity_scale = 0.0
 shape = SubResource( 1 )
 
 [node name="Body" type="CSGSphere" parent="."]
+
+[node name="Highlighter" type="CSGTorus" parent="Body"]
+inner_radius = 1.0
+outer_radius = 1.5
+sides = 24
+material = ExtResource( 2 )
