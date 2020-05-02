@@ -8,43 +8,49 @@ var player: Spatial
 var nearest_enemy: Spatial
 var enemies
 
+signal time_to_mutate
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = spawn_player(Vector3(0, 0, 0))
 	enemies = spawn_enemies(5, player)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-func _physics_process(delta):
-	if nearest_enemy:
-		nearest_enemy.unhighlight()
-	_find_nearest_enemy_to_cursor(_get_cursor_world_position())
+	var new_nearest_enemy = _find_nearest_enemy_to_cursor(_get_cursor_world_position())
+	if new_nearest_enemy != nearest_enemy:
+		if nearest_enemy:
+			nearest_enemy.unhighlight()
+		nearest_enemy = new_nearest_enemy
+		nearest_enemy.highlight()
 	#if nearest_enemy.isMutated():
-#	(player.get_node("PlayerBody") as Spatial).look_at_from_position(Vector3(0, 0, 0), nearest_enemy.translation, Vector3(0, 1, 0))
-	nearest_enemy.highlight()
-	print(nearest_enemy.name)
+	var player_body: Spatial = player.get_node("PlayerBody") 
+	player_body.look_at(nearest_enemy.translation, Vector3(0, 1, 0))
+
+	#print(nearest_enemy.name)
 	
 	
 func _get_cursor_world_position():
 	var cursor_position = get_viewport().get_mouse_position()
-	return $Camera.project_position(cursor_position, $Camera.translation.y)
+	return $Camera.project_position(cursor_position, $Camera.translation.y) + player.translation
 
 func _find_nearest_enemy_to_cursor(cursor_position):
 	var min_dist = 10000000
+	var _nearest_enemy: Spatial
 	for enemy in enemies:
 		var distance = enemy.translation.distance_to(cursor_position)
 		if distance < min_dist:
 			min_dist = distance
-			nearest_enemy = enemy
+			_nearest_enemy = enemy
+	return _nearest_enemy
 
 func _input(event):
 	if event is InputEventKey:
 		if event.is_pressed() \
 		and event.get_scancode_with_modifiers() == KEY_Q \
-		and not event.is_echo():
-			player.dash(enemies[randi() % len(enemies)])
+		and not event.is_echo() \
+		and nearest_enemy != null:
+			emit_signal("time_to_mutate")
+			player.dash(nearest_enemy)
 
 # Spawns player on pos
 func spawn_player(pos:Vector3):
@@ -64,6 +70,7 @@ func spawn_enemies(count, player_inst):
 		enemy_inst.global_translate(pos)
 		enemy_inst.set_player(player_inst)
 		enemy_inst.activate()
+		connect("time_to_mutate", enemy_inst, "_mutate")
 		print("Enemy spawned at " + str(pos))
 	return result
 

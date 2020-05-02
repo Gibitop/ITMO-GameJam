@@ -2,7 +2,8 @@ extends Spatial
 
 var harmful: SpatialMaterial = preload("res://materials/harmful.tres")
 var harmles: SpatialMaterial = preload("res://materials/harmles.tres")
-
+var main_scene_script = load("res://Scripts/MainScene.gd")
+ 
 export (float) var speed
 export (float) var mutationChanse
 
@@ -11,8 +12,9 @@ var mutated: bool = false
 var player: Spatial
 
 onready var body = $Body
-onready var highlighter = $Body/Highlighter
+onready var highlighter = $Body/Highlighter/
 
+#signal time_to_mutate
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,9 +35,7 @@ func set_player(player: Spatial):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if active:
-		_move(delta)
-		_mutate()
-	
+		_move(delta)	
 
 func _move(delta):
 	var direction = (player.translation - translation).normalized()
@@ -43,13 +43,14 @@ func _move(delta):
 	
 
 func _mutate():
-	if !mutated:
+	if !mutated and active:
+		
 		var distance = (player.translation - translation).length()
 		var rand = randf()
 		#print(rand)
-		if distance < 5 and rand <= mutationChanse:
-			mutated = true
-			body.material = harmles
+		#if distance < 5 and rand <= mutationChanse:
+		mutated = true
+		body.material = harmles
 			
 func kill():
 	active = false

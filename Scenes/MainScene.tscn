@@ -16,3 +16,6 @@ material = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 36.3056, 0 )
 current = true
 fov = 79.9
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
