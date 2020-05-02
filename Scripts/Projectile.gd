@@ -21,8 +21,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	check_collisions()
 	if active:
+		check_collisions()
 		if spawn_time > lifetime and not $AnimationPlayer.is_playing():
 			destroy()
 		else:

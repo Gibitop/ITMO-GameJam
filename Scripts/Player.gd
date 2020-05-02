@@ -107,8 +107,7 @@ func _process(delta):
 			dashing = false
 			_push_enemies(get_parent().get_all_enemies())
 			$Area/CollisionShape.shape.radius = default_kill_radius
-#			print("Dashed to " + str(translation))
-
+			print("Dashed to " + str(translation))
 		else:
 			var estimated_distance = translation.distance_to(dashing_target.translation)
 			var speed = estimated_distance / estimated_time * delta * 1000 # units/millis

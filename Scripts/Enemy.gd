@@ -21,11 +21,12 @@ onready var highlighter = $Highlighter
 func _ready():
 	randomize()
 	highlighter.visible = false
-	body.material = harmful
 	
 func activate():
 	active = true
 	visible = true
+	mutated = false
+	body.material = harmful
 	
 func is_active():
 	return active
@@ -37,7 +38,7 @@ func set_player(player: Spatial):
 	self.player = player
 
 func _process(delta):
-	if translation.length() > arena_radius:
+	if translation.length() > arena_radius and active:
 		kill()
 
 
@@ -64,6 +65,8 @@ func kill():
 	active = false
 	visible = false
 	highlighter.visible = false
+	translation = Vector3(200, 200, 200)
+	set_axis_velocity(Vector3(0, 0, 0))
 
 func highlight():
 	highlighter.visible = true
