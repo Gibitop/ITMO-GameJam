@@ -11,7 +11,8 @@ var health = MAX_HEALTH;
 const FIRE_BUTTON = KEY_SPACE
 
 export(int) var project_tile_count = 3
-
+export (float) var default_kill_radius
+export (float) var dashing_kill_radius
 export(int) var DASHING_TIME = 333 # millis
 var dashing = false
 var dashing_start_time = 0.0
@@ -20,7 +21,7 @@ var energy: int = 3
 
 
 func _ready():
-	pass # Replace with function body.
+	$Area/CollisionShape.shape.radius = default_kill_radius
 
 # Восстанавливает amount очков здоровья
 func heal(amount):
@@ -42,6 +43,7 @@ func _die():
 func dash(target):
 	print("Player dashing to " + str(target.translation))
 	dashing_start_time = 0
+	$Area/CollisionShape.shape.radius = dashing_kill_radius
 	dashing = true
 	dashing_target = target
 	
@@ -72,13 +74,15 @@ func _input(event):
 
 func _process(delta):
 	var viewport  = get_parent().get_viewport()
-	var camera = $Camera
-	var test = utils.get_cursor_world_position(viewport, camera)
-	$PlayerBody.look_at(test, Vector3(0, 1, 0))
+	var cursor_world_position = utils.get_cursor_world_position(viewport, $Camera)
+	$PlayerBody.look_at(cursor_world_position, Vector3(0, 1, 0))
+	var pointer_z_scale = (translation - cursor_world_position).length() / 100
+	print(pointer_z_scale)
+	$PlayerBody/Pointer.scale = Vector3(0.5, 0.5, max(min(pointer_z_scale, 1), 0.2) )
 	for collision in collider.get_overlapping_bodies():
 		var parent = collision.get_parent()
 		if parent.is_active():
-			if parent.isMutated():
+			if parent.isMutated() or dashing:
 				add_energy(1)
 			else:
 				damage(1)
@@ -90,6 +94,7 @@ func _process(delta):
 		var estimated_time = DASHING_TIME - dashing_start_time
 		if estimated_time <= 0:
 			dashing = false
+			$Area/CollisionShape.shape.radius = default_kill_radius
 #			print("Dashed to " + str(translation))
 		else:
 			var estimated_distance = translation.distance_to(dashing_target.translation)

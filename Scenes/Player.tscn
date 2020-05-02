@@ -1,20 +1,25 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=2]
 [ext_resource path="res://Models/Pointer.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://Scripts/Pointer.gd" type="Script" id=4]
+[ext_resource path="res://motion_blur/motion_blur.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SphereShape" id=1]
 
 [node name="Player" type="Spatial"]
 script = ExtResource( 1 )
+default_kill_radius = 1.0
+dashing_kill_radius = 3.0
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 44, 0 )
 current = true
 size = 141.03
 script = ExtResource( 2 )
+
+[node name="motion_blur" parent="Camera" instance=ExtResource( 5 )]
 
 [node name="Area" type="Area" parent="."]
 
@@ -24,7 +29,7 @@ shape = SubResource( 1 )
 [node name="PlayerBody" type="CSGSphere" parent="."]
 
 [node name="Pointer" type="MeshInstance" parent="PlayerBody"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+transform = Transform( -0.5, 0, -7.78829e-08, 0, 0.5, 0, 1.94707e-07, 0, -0.2, 0, 0, 0 )
 mesh = ExtResource( 3 )
 material/0 = null
 script = ExtResource( 4 )
