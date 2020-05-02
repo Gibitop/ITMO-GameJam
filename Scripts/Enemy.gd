@@ -35,15 +35,16 @@ func set_player(player: Spatial):
 	self.player = player
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
 	if active:
 		pass
-		#_move(delta)
+		_move(delta)
 
 func _move(delta):
 	var direction = (player.translation - translation).normalized()
-	#transform = transform.translated(direction * speed * (delta/1000))
-	add_central_force(direction * speed * (delta / 1000))
+#	transform = transform.translated(direction * speed * (delta/1000))
+	
+	add_central_force(direction * speed * delta)
 
 func _mutate():
 	if !mutated and active:

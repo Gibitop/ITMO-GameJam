@@ -6,7 +6,6 @@
 [sub_resource type="SphereShape" id=1]
 
 [node name="Enemy" type="RigidBody"]
-can_sleep = false
 linear_damp = 0.99
 script = ExtResource( 1 )
 speed = 1000.0
