@@ -17,7 +17,6 @@ size = 141.03
 script = ExtResource( 2 )
 
 [node name="Area" type="Area" parent="."]
-collision_layer = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 1 )

@@ -44,5 +44,8 @@ func destroy():
 
 func check_collisions():
 	for collision in $Area.get_overlapping_bodies():
-		if collision.get_parent() is enemy_scene:
-			collision.get_parent().kill() 
+		var enemy = collision.get_parent()
+		if enemy.is_active():
+			collision.get_parent().kill()
+			destroy()
+			break

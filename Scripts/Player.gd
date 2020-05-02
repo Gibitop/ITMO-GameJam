@@ -45,14 +45,6 @@ func dash(target):
 	dashing_target = target
 	
 func fire():
-<<<<<<< HEAD
-	print("FIRE")
-	var rad_delta = (2 * PI) / project_tile_count
-	for i in range(project_tile_count):
-		var projectile_inst = projectile_scene.instance()
-		get_parent().add_child(projectile_inst)
-		projectile_inst.activate(i * rad_delta, translation)
-=======
 	if (energy > 0):
 		energy -= 1
 		print("FIRE")
@@ -63,7 +55,7 @@ func fire():
 			print(str(i) + " " + str(i * rad_delta))
 			get_parent().add_child(projectile_inst)
 			projectile_inst.activate(i * rad_delta, translation)
->>>>>>> 0f395acfd2cf0a8f734bde8547ad997073337b3a
+
 
 func add_energy(amount=1):
 	amount = max(amount, 0)
