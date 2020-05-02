@@ -112,6 +112,9 @@ func _process(delta):
 				emit_signal("combo_changed", combo)
 			collision.kill()
 
+	
+
+func _physics_process(delta):
 	if dashing:
 		dashing_start_time = dashing_start_time + delta
 		var estimated_time = DASHING_TIME - dashing_start_time
@@ -124,7 +127,6 @@ func _process(delta):
 			var speed = estimated_distance / estimated_time * delta * 1000 # units/millis
 			var direction = (dashing_target.translation - translation).normalized()
 			transform = transform.translated(direction * speed * ease(1 - estimated_time / DASHING_TIME, ease_curve))
-
 
 func _push_enemies(enemies):
 	print("Pushing")
