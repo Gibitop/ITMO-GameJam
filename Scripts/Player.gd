@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var project_tile_scene = preload("res://Scenes/ProjectTile.tscn")
+onready var projectile_scene = preload("res://Scenes/Projectile.tscn")
 
 const MAX_HEALTH = 100;
 
@@ -46,10 +46,10 @@ func fire():
 	var rad_delta = (2 * PI) / project_tile_count
 	print(rad_delta)
 	for i in range(project_tile_count):
-		var project_tile_inst = project_tile_scene.instance()
+		var projectile_inst = projectile_scene.instance()
 		print(str(i) + " " + str(i * rad_delta))
-		get_parent().add_child(project_tile_inst)
-		project_tile_inst.activate(i * rad_delta, translation)
+		get_parent().add_child(projectile_inst)
+		projectile_inst.activate(i * rad_delta, translation)
 
 
 func _input(event):
