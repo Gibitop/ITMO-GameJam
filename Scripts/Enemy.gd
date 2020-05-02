@@ -7,6 +7,8 @@ var main_scene_script = load("res://Scripts/MainScene.gd")
 export (float) var speed
 export (float) var max_mutation_distance
 export (float) var max_mutation_chance
+export (float) var arena_radius
+
 
 var active: bool = false
 var mutated: bool = false
@@ -34,7 +36,11 @@ func isMutated():
 func set_player(player: Spatial):
 	self.player = player
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if translation.length() > arena_radius:
+		kill()
+
+
 func _physics_process(delta):
 	if active:
 		pass

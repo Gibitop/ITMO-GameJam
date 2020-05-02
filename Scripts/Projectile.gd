@@ -8,9 +8,11 @@ var angle: float = 0
 var distance: float = 0
 
 var active: bool = false
+var spawn_time
 
 export(float) var speed = 1
 export(float) var curvature = 5
+export(float) var lifetime = 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,8 +23,12 @@ func _ready():
 func _process(delta):
 	check_collisions()
 	if active:
-		var next_point: Vector3 = _get_next_spiral_point(delta)
-		transform = transform.translated(next_point - translation)
+		if spawn_time > lifetime and not $AnimationPlayer.is_playing():
+			destroy()
+		else:
+			spawn_time += delta
+			var next_point: Vector3 = _get_next_spiral_point(delta)
+			transform = transform.translated(next_point - translation)
 	
 func _get_next_spiral_point(delta):
 	distance += speed * delta * 100
@@ -34,14 +40,20 @@ func _get_next_spiral_point(delta):
 	return Vector3(x, 0, y) + start_point
 
 func activate(_angle, _start_point):
+	$AnimationPlayer.stop()
+	$ProjectileBody.radius = 1
 	active = true
+	spawn_time = 0
 	start_angle = _angle # in rads
 	start_point = _start_point
 	
 func destroy():
+	$AnimationPlayer.play("Shrink")
+	yield($AnimationPlayer, "animation_finished")
 	active = false
 	visible = false
-
+	
+	
 func check_collisions():
 	for collision in $Area.get_overlapping_bodies():
 		if collision.is_active():

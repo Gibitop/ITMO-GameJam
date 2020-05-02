@@ -23,7 +23,7 @@ export(float) var DASHING_TIME = 333 # secs
 var dashing = false
 var dashing_start_time = 0.0
 var dashing_target: Spatial
-var energy: int = 3
+var energy: int = 9999
 
 
 func _ready():
@@ -59,10 +59,10 @@ func fire():
 		energy -= 1
 		print("FIRE")
 		var rad_delta = (2 * PI) / project_tile_count
-		print(rad_delta)
+#		print(rad_delta)
 		for i in range(project_tile_count):
 			var projectile_inst = projectile_scene.instance()
-			print(str(i) + " " + str(i * rad_delta))
+#			print(str(i) + " " + str(i * rad_delta))
 			get_parent().add_child(projectile_inst)
 			projectile_inst.activate(i * rad_delta, translation)
 
@@ -89,7 +89,6 @@ func _process(delta):
 	var cursor_world_position = utils.get_cursor_world_position(viewport, $Camera)
 	$PlayerBody.look_at(cursor_world_position, Vector3(0, 1, 0))
 	var pointer_z_scale = (translation - cursor_world_position).length() / 100
-	print(pointer_z_scale)
 	$PlayerBody/Pointer.scale = Vector3(0.5, 0.5, max(min(pointer_z_scale, 1), 0.2) )
 	for collision in collider.get_overlapping_bodies():
 		if collision.is_active():
