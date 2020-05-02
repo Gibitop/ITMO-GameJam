@@ -72,7 +72,6 @@ func spawn_enemies(count, player_inst):
 		enemy_inst.set_player(player_inst)
 		enemy_inst.activate()
 		mutation_timer.connect("timeout", enemy_inst, "_mutate")
-#		connect("time_to_mutate", enemy_inst, "_mutate")
 		print("Enemy spawned at " + str(pos))
 	return result
 

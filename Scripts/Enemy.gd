@@ -25,6 +25,9 @@ func activate():
 	active = true
 	visible = true
 	
+func is_active():
+	return active
+	
 func isMutated():
 	return mutated
 	
