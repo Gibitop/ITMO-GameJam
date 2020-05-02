@@ -1,5 +1,6 @@
 extends Spatial
 
+onready var utils = preload("res://Scripts/utils.gd")
 onready var projectile_scene = preload("res://Scenes/Projectile.tscn")
 onready var collider: Area = $Area
 
@@ -70,6 +71,10 @@ func _input(event):
 			fire()
 
 func _process(delta):
+	var viewport  = get_parent().get_viewport()
+	var camera = $Camera
+	var test = utils.get_cursor_world_position(viewport, camera)
+	$PlayerBody.look_at(test, Vector3(0, 1, 0))
 	for collision in collider.get_overlapping_bodies():
 		var parent = collision.get_parent()
 		if parent.is_active():
@@ -80,9 +85,6 @@ func _process(delta):
 	#			TODO: push around
 			parent.kill()
 
-	#var ray = $Camera.project_position(get_viewport().get_mouse_position(), 44)
-	#print(ray)
-	#translation = ray
 	if dashing:
 		dashing_start_time = dashing_start_time + delta
 		var estimated_time = DASHING_TIME - dashing_start_time

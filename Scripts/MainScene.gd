@@ -1,5 +1,6 @@
 extends Spatial
 
+onready var utils = preload("res://Scripts/utils.gd")
 onready var player_scene = preload("res://Scenes/Player.tscn")
 onready var enemy_scene = preload("res://Scenes/Enemy.tscn")
 onready var enemy = preload("res://Scripts/Enemy.gd")
@@ -19,7 +20,7 @@ func _ready():
 	enemies = spawn_enemies(15, player)
 
 func _process(delta):
-	var cursor_position = _get_cursor_world_position()
+	var cursor_position = utils.get_cursor_world_position(get_viewport(), player.get_node("Camera"))
 	var new_nearest_enemy = _find_nearest_enemy_to_cursor(cursor_position)
 	if new_nearest_enemy != nearest_enemy:
 		if nearest_enemy:
@@ -27,15 +28,6 @@ func _process(delta):
 		nearest_enemy = new_nearest_enemy
 		if nearest_enemy:
 			nearest_enemy.highlight()
-	#if nearest_enemy.isMutated():
-
-	player.get_node("PlayerBody").look_at(cursor_position, Vector3(0, 1, 0))
-
-	
-	
-func _get_cursor_world_position():
-	var cursor_position = get_viewport().get_mouse_position()
-	return $Camera.project_position(cursor_position, $Camera.translation.y) + player.translation
 
 func _find_nearest_enemy_to_cursor(cursor_position):
 	var min_dist = 10000000
