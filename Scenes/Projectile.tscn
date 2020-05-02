@@ -5,14 +5,14 @@
 [sub_resource type="SphereShape" id=1]
 radius = 1.00156
 
-[node name="ProjectTile" type="Spatial"]
+[node name="Projectile" type="Spatial"]
 script = ExtResource( 1 )
 speed = 0.1
 curvature = 0.1
 
-[node name="ProjectTileBody" type="CSGSphere" parent="."]
+[node name="ProjectileBody" type="CSGSphere" parent="."]
 
-[node name="Area" type="Area" parent="ProjectTileBody"]
+[node name="Area" type="Area" parent="ProjectileBody"]
 
-[node name="CollisionShape" type="CollisionShape" parent="ProjectTileBody/Area"]
+[node name="CollisionShape" type="CollisionShape" parent="ProjectileBody/Area"]
 shape = SubResource( 1 )
