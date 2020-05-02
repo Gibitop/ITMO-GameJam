@@ -8,7 +8,6 @@ onready var enemy = preload("res://Scripts/Enemy.gd")
 
 var player: Spatial
 var nearest_enemy: Spatial
-var enemies
 var mutation_timer: Timer
 var spawner
 
@@ -19,7 +18,12 @@ func _ready():
 	mutation_timer.start()
 	spawner = spawner_script.new(player_scene, enemy_scene)
 	player = spawner.spawn_player(self, Vector3(0, 0, 0))
-	enemies = spawner.spawn_enemies(self, 15, player)
+	spawner.spawn_enemies(self, 2, player)
+	test()
+
+func test():
+	yield(get_tree().create_timer(4), "timeout")
+	spawner.spawn_enemies(self, 3, player)
 
 func _process(delta):
 	var cursor_position = utils.get_cursor_world_position(get_viewport(), player.get_node("Camera"))
@@ -34,7 +38,7 @@ func _process(delta):
 func _find_nearest_enemy_to_cursor(cursor_position):
 	var min_dist = 10000000
 	var _nearest_enemy: Spatial
-	for enemy in enemies:
+	for enemy in spawner.get_enemies_pool():
 		if not enemy.is_active(): 
 			continue
 		var distance = enemy.translation.distance_to(cursor_position)
@@ -53,4 +57,4 @@ func _input(event):
 
 	
 func get_all_enemies():
-	return enemies
+	return spawner.get_enemies_pool()

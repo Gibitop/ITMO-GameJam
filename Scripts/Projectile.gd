@@ -52,6 +52,7 @@ func destroy():
 	yield($AnimationPlayer, "animation_finished")
 	active = false
 	visible = false
+#	free()
 	
 	
 func check_collisions():

@@ -3,6 +3,8 @@ extends Node
 var enemy_scene = load("res://Scripts/Player.gd")
 var player_scene = load("res://Scripts/Enemy.gd")
 
+var enemies_pool = []
+
 func _init(_player_scene, _enemy_scene):
 	enemy_scene = _enemy_scene
 	player_scene = _player_scene
@@ -16,12 +18,23 @@ func get_enemy_position(min_range, max_range):
 	return Vector3(x, 0, y)
 
 func spawn_enemy(root, pos, player_inst):
-	var enemy_inst = spawn(root, enemy_scene, get_enemy_position(10, 30))
+	var enemy_inst = get_enemy_from_pool()
+	if enemy_inst == null:
+		print("spawner new enemy")
+		enemy_inst = spawn(root, enemy_scene, get_enemy_position(10, 30))
 	enemy_inst.set_player(player_inst)
 	enemy_inst.activate()
 	root.mutation_timer.connect("timeout", enemy_inst, "_mutate")
 	print("Enemy spawned at " + str(pos))
+	enemies_pool.append(enemy_inst)
 	return enemy_inst
+	
+func get_enemy_from_pool():
+	for enemy in enemies_pool:
+		if not enemy.is_active():
+			print("enemy got from pool")
+			return enemy
+	return null
 	
 func spawn_player(root, pos):
 	var player_inst = spawn(root, player_scene, pos)
@@ -40,3 +53,6 @@ func spawn(root, _scene, pos):
 	root.add_child(inst)
 	inst.global_translate(pos)
 	return inst
+	
+func get_enemies_pool():
+	return enemies_pool
