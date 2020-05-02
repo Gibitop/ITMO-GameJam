@@ -12,6 +12,7 @@ max_mutation_distance = 50.0
 max_mutation_chance = 0.3
 
 [node name="RigidBody" type="RigidBody" parent="."]
+collision_layer = 7
 gravity_scale = 0.0
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
