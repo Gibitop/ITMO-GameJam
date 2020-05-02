@@ -4,15 +4,18 @@ onready var utils = preload("res://Scripts/utils.gd")
 onready var projectile_scene = preload("res://Scenes/Projectile.tscn")
 onready var collider: Area = $Area
 
-export (float) var max_push_disance = 10
+export (float)       var max_push_disance = 10
 export (float, EASE) var ease_curve = 0.0
-export(int) var project_tile_count = 3
-export (float) var default_kill_radius
-export (float) var dashing_kill_radius
-export(float) var DASHING_TIME = 333 # secs
-export (float) var max_health = 100;
+export (int)         var project_tile_count = 3
+export (float)       var default_kill_radius
+export (float)       var dashing_kill_radius
+export (float)       var DASHING_TIME = 333 # secs
+export (float)       var max_health = 100;
 
 const FIRE_BUTTON = KEY_SPACE
+
+signal player_died
+signal combo_changed
 
 var health = max_health;
 var dashing = false
@@ -20,8 +23,16 @@ var dashing_start_time = 0.0
 var dashing_target: Spatial
 var energy: int = 9999
 
+var money = 0
+var score = 0
+var combo = 0
+var combo_timer: Timer
 
 func _ready():
+	combo_timer = Timer.new()
+	add_child(combo_timer)
+	combo_timer.connect("timeout", self, "_reset_combo")
+	
 	$Area/CollisionShape.shape.radius = default_kill_radius
 
 # Восстанавливает amount очков здоровья
@@ -49,6 +60,10 @@ func dash(target):
 	dashing = true
 	dashing_target = target
 
+func _reset_combo():
+	print('Combo reset (combo was: ', combo, ')')
+	combo_timer.stop()
+	combo = 0
 
 func fire():
 	if (energy > 0):
@@ -91,6 +106,10 @@ func _process(delta):
 				add_energy(1)
 			else:
 				damage(1)
+			if dashing:
+				combo_timer.start()
+				combo += 1
+				emit_signal("combo_changed", combo)
 			collision.kill()
 
 	if dashing:
