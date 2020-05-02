@@ -5,14 +5,15 @@ var harmles: SpatialMaterial = preload("res://materials/harmles.tres")
 var main_scene_script = load("res://Scripts/MainScene.gd")
  
 export (float) var speed
-export (float) var mutationChanse
+export (float) var max_mutation_distance
+export (float) var max_mutation_chance
 
 var active: bool = false
 var mutated: bool = false
 var player: Spatial
 
 onready var body = $Body
-onready var highlighter = $Body/Highlighter/
+onready var highlighter = $Highlighter
 
 #signal time_to_mutate
 
@@ -44,13 +45,11 @@ func _move(delta):
 
 func _mutate():
 	if !mutated and active:
-		
 		var distance = (player.translation - translation).length()
-		var rand = randf()
-		#print(rand)
-		#if distance < 5 and rand <= mutationChanse:
-		mutated = true
-		body.material = harmles
+		var chance = (max_mutation_chance * max(1 - distance / max_mutation_distance, 0))
+		if randf() <= chance:
+			mutated = true
+			body.material = harmles
 			
 func kill():
 	active = false

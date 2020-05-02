@@ -7,11 +7,14 @@ onready var enemy = preload("res://Scripts/Enemy.gd")
 var player: Spatial
 var nearest_enemy: Spatial
 var enemies
-
-signal time_to_mutate
+var mutation_timer: Timer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	mutation_timer = Timer.new()
+	add_child(mutation_timer)
+	mutation_timer.start()
+	
 	player = spawn_player(Vector3(0, 0, 0))
 	enemies = spawn_enemies(5, player)
 
@@ -26,7 +29,6 @@ func _process(delta):
 	var player_body: Spatial = player.get_node("PlayerBody") 
 	player_body.look_at(nearest_enemy.translation, Vector3(0, 1, 0))
 
-	#print(nearest_enemy.name)
 	
 	
 func _get_cursor_world_position():
@@ -70,7 +72,8 @@ func spawn_enemies(count, player_inst):
 		enemy_inst.global_translate(pos)
 		enemy_inst.set_player(player_inst)
 		enemy_inst.activate()
-		connect("time_to_mutate", enemy_inst, "_mutate")
+		mutation_timer.connect("timeout", enemy_inst, "_mutate")
+#		connect("time_to_mutate", enemy_inst, "_mutate")
 		print("Enemy spawned at " + str(pos))
 	return result
 

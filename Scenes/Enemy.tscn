@@ -4,10 +4,13 @@
 [ext_resource path="res://materials/arena.tres" type="Material" id=2]
 
 [sub_resource type="SphereShape" id=1]
+radius = 1.5
 
 [node name="Enemy" type="Spatial"]
 script = ExtResource( 1 )
-mutationChanse = 50.0
+speed = 1000.0
+max_mutation_distance = 50.0
+max_mutation_chance = 0.3
 
 [node name="RigidBody" type="RigidBody" parent="."]
 gravity_scale = 0.0
@@ -17,7 +20,7 @@ shape = SubResource( 1 )
 
 [node name="Body" type="CSGSphere" parent="."]
 
-[node name="Highlighter" type="CSGTorus" parent="Body"]
+[node name="Highlighter" type="CSGTorus" parent="."]
 inner_radius = 1.0
 outer_radius = 1.5
 sides = 24
