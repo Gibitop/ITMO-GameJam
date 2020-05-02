@@ -51,7 +51,6 @@ func _input(event):
 		and event.get_scancode_with_modifiers() == KEY_Q \
 		and not event.is_echo() \
 		and nearest_enemy != null:
-			emit_signal("time_to_mutate")
 			player.dash(nearest_enemy)
 
 # Spawns player on pos

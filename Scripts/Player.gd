@@ -1,8 +1,14 @@
 extends Spatial
 
+onready var project_tile_scene = preload("res://Scenes/ProjectTile.tscn")
+
 const MAX_HEALTH = 100;
 
 var health = MAX_HEALTH;
+
+const FIRE_BUTTON = KEY_SPACE
+
+export(int) var project_tile_count = 3
 
 export(int) var DASHING_TIME = 333 # millis
 var dashing = false
@@ -34,6 +40,24 @@ func dash(target):
 	#print(OS.get_ticks_msec())
 	dashing = true
 	dashing_target = target
+	
+func fire():
+	print("FIRE")
+	var rad_delta = (2 * PI) / project_tile_count
+	print(rad_delta)
+	for i in range(project_tile_count):
+		var project_tile_inst = project_tile_scene.instance()
+		print(str(i) + " " + str(i * rad_delta))
+		get_parent().add_child(project_tile_inst)
+		project_tile_inst.activate(i * rad_delta, translation)
+
+
+func _input(event):
+	if event is InputEventKey:
+		if event.get_scancode_with_modifiers() == FIRE_BUTTON \
+		and event.is_pressed() \
+		and not event.is_echo():
+			fire()
 
 func _process(delta):
 	
