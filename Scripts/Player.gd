@@ -44,10 +44,8 @@ func dash(target):
 func fire():
 	print("FIRE")
 	var rad_delta = (2 * PI) / project_tile_count
-	print(rad_delta)
 	for i in range(project_tile_count):
 		var projectile_inst = projectile_scene.instance()
-		print(str(i) + " " + str(i * rad_delta))
 		get_parent().add_child(projectile_inst)
 		projectile_inst.activate(i * rad_delta, translation)
 
