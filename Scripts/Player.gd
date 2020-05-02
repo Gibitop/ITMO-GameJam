@@ -16,6 +16,8 @@ const FIRE_BUTTON = KEY_SPACE
 
 signal player_died
 signal combo_changed
+signal money_changed
+signal score_changed
 
 var health = max_health;
 var dashing = false
@@ -27,13 +29,23 @@ var money = 0
 var score = 0
 var combo = 0
 var combo_timer: Timer
+var alive_timer: Timer
 
 func _ready():
+	alive_timer = Timer.new()
 	combo_timer = Timer.new()
 	add_child(combo_timer)
+	add_child(alive_timer)
+	alive_timer.start()
+	alive_timer.connect("timeout", self, "_increase_score")
 	combo_timer.connect("timeout", self, "_reset_combo")
 	
 	$Area/CollisionShape.shape.radius = default_kill_radius
+	
+func _increase_score():
+	score += 1
+	emit_signal("score_changed", score)
+
 
 # Восстанавливает amount очков здоровья
 func heal(amount):
@@ -110,6 +122,8 @@ func _process(delta):
 				combo_timer.start()
 				combo += 1
 				emit_signal("combo_changed", combo)
+			money += 1
+			emit_signal("money_changed", money)
 			collision.kill()
 
 	
