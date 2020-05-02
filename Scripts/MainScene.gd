@@ -78,3 +78,6 @@ func _get_enemy_position(max_range):
 	var x = cos(angle) * distance
 	var y = sin(angle) * distance
 	return Vector3(x, 0, y)
+	
+func get_all_enemies():
+	return enemies

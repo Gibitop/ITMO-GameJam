@@ -1,4 +1,4 @@
-extends Spatial
+extends RigidBody
 
 var harmful: SpatialMaterial = preload("res://materials/harmful.tres")
 var harmles: SpatialMaterial = preload("res://materials/harmles.tres")
@@ -37,12 +37,13 @@ func set_player(player: Spatial):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if active:
-		_move(delta)	
+		pass
+		#_move(delta)
 
 func _move(delta):
 	var direction = (player.translation - translation).normalized()
-	transform = transform.translated(direction * speed * (delta/1000))
-	
+	#transform = transform.translated(direction * speed * (delta/1000))
+	add_central_force(direction * speed * (delta / 1000))
 
 func _mutate():
 	if !mutated and active:

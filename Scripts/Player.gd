@@ -10,9 +10,12 @@ var health = MAX_HEALTH;
 
 const FIRE_BUTTON = KEY_SPACE
 
-export(int) var project_tile_count = 3
+export (int) var project_tile_count = 3
 
-export(int) var DASHING_TIME = 333 # millis
+export (float) var max_push_disance = 10
+
+export (float) var DASHING_TIME = 333 # millis
+export (float, EASE) var ease_curve = 0.0
 var dashing = false
 var dashing_start_time = 0.0
 var dashing_target: Spatial
@@ -30,10 +33,11 @@ func heal(amount):
 # Наносит amount урона
 func damage(amount):
 	amount = max(amount, 0)
-	print("Player damaged by ", amount, " hp")
+	#print("Player damaged by ", amount, " hp")
 	health -= amount
 	if health <= 0:
-		_die()
+		pass
+		#_die()
 
 # TODO: обработка смерти
 func _die():
@@ -60,7 +64,7 @@ func fire():
 
 func add_energy(amount=1):
 	amount = max(amount, 0)
-	print("Added ", amount, " energy")
+	#print("Added ", amount, " energy")
 	energy += amount
 
 func _input(event):
@@ -69,6 +73,11 @@ func _input(event):
 		and event.is_pressed() \
 		and not event.is_echo():
 			fire()
+			
+		if event.get_scancode_with_modifiers() == KEY_E \
+		and event.is_pressed() \
+		and not event.is_echo():
+			_push_enemies(get_parent().get_all_enemies())
 
 func _process(delta):
 	var viewport  = get_parent().get_viewport()
@@ -76,24 +85,34 @@ func _process(delta):
 	var test = utils.get_cursor_world_position(viewport, camera)
 	$PlayerBody.look_at(test, Vector3(0, 1, 0))
 	for collision in collider.get_overlapping_bodies():
-		var parent = collision.get_parent()
-		if parent.is_active():
-			if parent.isMutated():
+		if collision.is_active():
+			if collision.isMutated():
 				add_energy(1)
 			else:
 				damage(1)
 	#			TODO: push around
-			parent.kill()
+			collision.kill()
 
 	if dashing:
 		dashing_start_time = dashing_start_time + delta
 		var estimated_time = DASHING_TIME - dashing_start_time
-		if estimated_time <= 0:
+		#print(str(estimated_time) + " " + str(dashing_start_time))
+		if translation.distance_to(dashing_target.translation) < 1 or not dashing_target.is_active():
 			dashing = false
-#			print("Dashed to " + str(translation))
+			_push_enemies(get_parent().get_all_enemies())
 		else:
 			var estimated_distance = translation.distance_to(dashing_target.translation)
 			var speed = estimated_distance / estimated_time * delta * 1000 # units/millis
 			var direction = (dashing_target.translation - translation).normalized()
-			transform = transform.translated(direction * speed)
-		
+			transform = transform.translated(direction * speed * ease(1 - estimated_time / DASHING_TIME, ease_curve))
+		#transform.interpolate_with(dashing_target.transform, 1 - estimated_time / DASHING_TIME)
+
+func _push_enemies(enemies):
+	print("Pushing")
+	for enemy in enemies:
+		if not enemy.is_active():
+			continue
+		var push_direction = enemy.translation - translation
+		var push_strength = max(0, max_push_disance - push_direction.length())
+		var force = push_direction * push_strength 
+		enemy.apply_central_impulse(force)

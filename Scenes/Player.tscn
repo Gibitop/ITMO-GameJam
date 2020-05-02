@@ -9,6 +9,8 @@
 
 [node name="Player" type="Spatial"]
 script = ExtResource( 1 )
+DASHING_TIME = 3.0
+ease_curve = -0.5
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 44, 0 )

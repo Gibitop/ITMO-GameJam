@@ -5,20 +5,18 @@
 
 [sub_resource type="SphereShape" id=1]
 
-[node name="Enemy" type="Spatial"]
+[node name="Enemy" type="RigidBody"]
+can_sleep = false
+linear_damp = 0.99
 script = ExtResource( 1 )
 speed = 1000.0
 max_mutation_distance = 50.0
 max_mutation_chance = 0.3
 
-[node name="RigidBody" type="RigidBody" parent="."]
-collision_layer = 7
-gravity_scale = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
-shape = SubResource( 1 )
-
 [node name="Body" type="CSGSphere" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
 
 [node name="Highlighter" type="CSGTorus" parent="."]
 inner_radius = 1.0
