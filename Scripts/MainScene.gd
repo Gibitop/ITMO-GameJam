@@ -16,18 +16,20 @@ func _ready():
 	mutation_timer.start()
 	
 	player = spawn_player(Vector3(0, 0, 0))
-	enemies = spawn_enemies(5, player)
+	enemies = spawn_enemies(15, player)
 
 func _process(delta):
-	var new_nearest_enemy = _find_nearest_enemy_to_cursor(_get_cursor_world_position())
+	var cursor_position = _get_cursor_world_position()
+	var new_nearest_enemy = _find_nearest_enemy_to_cursor(cursor_position)
 	if new_nearest_enemy != nearest_enemy:
 		if nearest_enemy:
 			nearest_enemy.unhighlight()
 		nearest_enemy = new_nearest_enemy
-		nearest_enemy.highlight()
+		if nearest_enemy:
+			nearest_enemy.highlight()
 	#if nearest_enemy.isMutated():
-	var player_body: Spatial = player.get_node("PlayerBody") 
-	player_body.look_at(nearest_enemy.translation, Vector3(0, 1, 0))
+
+	player.get_node("PlayerBody").look_at(cursor_position, Vector3(0, 1, 0))
 
 	
 	
@@ -39,6 +41,8 @@ func _find_nearest_enemy_to_cursor(cursor_position):
 	var min_dist = 10000000
 	var _nearest_enemy: Spatial
 	for enemy in enemies:
+		if not enemy.is_active(): 
+			continue
 		var distance = enemy.translation.distance_to(cursor_position)
 		if distance < min_dist:
 			min_dist = distance
