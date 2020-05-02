@@ -10,7 +10,8 @@ linear_damp = 0.99
 script = ExtResource( 1 )
 speed = 1000.0
 max_mutation_distance = 50.0
-max_mutation_chance = 0.3
+max_mutation_chance = 0.05
+arena_radius = 100.0
 
 [node name="Body" type="CSGSphere" parent="."]
 
