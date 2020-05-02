@@ -12,6 +12,7 @@ script = ExtResource( 1 )
 sides = 64
 
 [node name="Pointer" type="MeshInstance" parent="PlayerBody"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 mesh = ExtResource( 3 )
 material/0 = null
 script = ExtResource( 4 )
@@ -19,4 +20,5 @@ script = ExtResource( 4 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 44, 0 )
 current = true
+size = 141.03
 script = ExtResource( 2 )
