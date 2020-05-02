@@ -35,4 +35,8 @@ func activate(_angle, _start_point):
 	active = true
 	start_angle = _angle # in rads
 	start_point = _start_point
+	
+func destroy():
+	active = false
+	visible = false
 
