@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Themes/MainTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Scenes/UI/Blur.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/UI/Pause.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Pause.gd" type="Script" id=3]
 
 [node name="Pause" type="Control"]
 pause_mode = 2
