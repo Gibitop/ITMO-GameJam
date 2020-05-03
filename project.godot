@@ -16,12 +16,8 @@ _global_script_class_icons={
 [application]
 
 config/name="ITMO-GameJam"
-run/main_scene="res://Models/MainScene.tscn"
+run/main_scene="res://Scenes/MainScene.tscn"
 config/icon="res://icon.png"
-
-[debug]
-
-settings/fps/force_fps=60
 
 [layer_names]
 
@@ -36,4 +32,3 @@ settings/fps/force_fps=60
 [rendering]
 
 quality/filters/msaa=2
-environment/default_environment="res://default_env.tres"
