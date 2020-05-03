@@ -10,7 +10,7 @@ export (int)         var project_tile_count = 3
 export (float)       var default_kill_radius
 export (float)       var dashing_kill_radius
 export (float)       var DASHING_TIME = 333 # secs
-export (float)       var max_health = 100;
+export (float)       var max_health = 3
 
 const FIRE_BUTTON = KEY_SPACE
 
@@ -65,11 +65,14 @@ func damage(amount):
 	emit_signal("health_changed", health)
 	if health <= 0:
 		pass
-		#_die()
+		_die()
 
 # TODO: обработка смерти
 func _die():
-	emit_signal("player_died")
+#	emit_signal("player_died")
+	Engine.time_scale = 0
+#	get_tree().paused = true
+	get_parent().get_node("GameOver").visible = true
 	
 	
 func dash(target):

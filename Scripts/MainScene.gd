@@ -5,12 +5,17 @@ onready var player_scene = preload("res://Scenes/Player.tscn")
 onready var enemy_scene = preload("res://Scenes/Enemy.tscn")
 onready var spawner_script = load("res://Scripts/spawner.gd")
 onready var enemy = preload("res://Scripts/Enemy.gd")
+onready var main_scene = load("res://Scenes/MainScene.tscn")
+onready var main_menu_scene = preload("res://Scenes/UI/MainMenu.tscn")
+
+onready var pause_menu = $Pause
 
 var player: Spatial
 var nearest_enemy: Spatial
 var mutation_timer: Timer
 var spawner
 var super_event_treshold = 1000
+var paused = true
 
 signal force_mutate
 
@@ -20,6 +25,8 @@ export (float) var auto_aim_sensitivity = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Engine.time_scale = 1
+	paused = false
 	mutation_timer = Timer.new()
 	add_child(mutation_timer)
 	mutation_timer.start()
@@ -33,11 +40,21 @@ func _ready():
 	player.connect("energy_changed", $HUD, "update_energy")
 	$HUD.update_energy(player.energy)
 	$HUD.update_hp(player.health)
-	
-	
+	_connect_buttons_signals()
 	spawner.spawn_enemies(self, 10, player)
 	test()
 	
+func _on_restart_button_pressed():
+	print("restart")
+	get_tree().change_scene("res://Scenes/MainScene.tscn")
+	
+func _on_main_menu_button_pressed():
+	get_tree().change_scene("res://Scenes/UI/MainMenu.tscn")
+
+func _connect_buttons_signals():
+	$GameOver/Container/RestartButton.connect("pressed", self, "_on_restart_button_pressed")
+	$GameOver/Container/ToMenuButton.connect("pressed", self, "_on_main_menu_button_pressed")
+
 func super_event(val):
 	if val > super_event_treshold:
 		super_event_treshold *= 10
@@ -46,7 +63,13 @@ func super_event(val):
 func test():
 	while true:
 		yield(get_tree().create_timer(3), "timeout")
-		spawner.spawn_enemies(self, 15, player)
+		if not get_tree().paused:
+			spawner.spawn_enemies(self, 15, player)
+
+func _pause():
+#	Engine.time_scale = 0
+	get_tree().paused = true
+	pause_menu.visible = true	
 
 func _process(delta):
 	var cursor_position = utils.get_cursor_world_position(get_viewport(), player.get_node("Camera"))
@@ -77,7 +100,12 @@ func _input(event):
 		and not event.is_echo() \
 		and nearest_enemy != null:
 			player.dash(nearest_enemy)
-
+			
+	if event is InputEventKey:
+		if event.get_scancode_with_modifiers() == KEY_ESCAPE \
+		and event.is_pressed() \
+		and not event.is_echo():
+			_pause()
 	
 func get_all_enemies():
 	return spawner.get_enemies_pool()

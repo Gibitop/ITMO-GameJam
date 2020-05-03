@@ -25,3 +25,5 @@ func update_energy(energy):
 
 func update_hp(hp):
 	$BL/HP.text = 'Здоровье: ' + str(hp)
+	
+

@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://materials/arena.tres" type="Material" id=1]
 [ext_resource path="res://Scripts/MainScene.gd" type="Script" id=2]
 [ext_resource path="res://default_environment.tres" type="Environment" id=3]
 [ext_resource path="res://materials/floor.tres" type="Material" id=4]
 [ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/UI/GameOverMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/UI/PauseMenu.tscn" type="PackedScene" id=7]
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 2 )
@@ -27,3 +29,12 @@ depth = 300.0
 material = ExtResource( 4 )
 
 [node name="HUD" parent="." instance=ExtResource( 5 )]
+pause_mode = 2
+
+[node name="Pause" parent="." instance=ExtResource( 7 )]
+pause_mode = 2
+visible = false
+
+[node name="GameOver" parent="." instance=ExtResource( 6 )]
+pause_mode = 2
+visible = false
