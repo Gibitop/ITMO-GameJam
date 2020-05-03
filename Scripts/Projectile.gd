@@ -8,7 +8,8 @@ var angle: float = 0
 var distance: float = 0
 
 var active: bool = false
-var spawn_time
+
+const NEAR_2PI = 2 * PI - 0.00001
 
 signal ememy_killed
 
@@ -24,12 +25,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if active:
-		if spawn_time > lifetime and not $AnimationPlayer.is_playing():
-			destroy()
-		else:
-			spawn_time += delta
-			var next_point: Vector3 = _get_next_spiral_point(delta)
-			transform = transform.translated(next_point - translation)
+		var next_point: Vector3 = _get_next_spiral_point(delta)
+		transform = transform.translated(next_point - translation)
 
 func _physics_process(delta):
 	if active:
@@ -38,8 +35,8 @@ func _physics_process(delta):
 func _get_next_spiral_point(delta):
 	distance += speed * delta * 100
 	angle = distance * curvature + start_angle
-	if angle > 2 * PI:
-		angle = angle - 2 * PI
+	if angle > NEAR_2PI:
+		angle = angle - NEAR_2PI
 	var x = sin(angle) * distance
 	var y = cos(angle) * distance
 	return Vector3(x, 0, y) + start_point
@@ -47,10 +44,13 @@ func _get_next_spiral_point(delta):
 func activate(_angle, _start_point):
 	$AnimationPlayer.stop()
 	$ProjectileBody.radius = 1
+	translation = _start_point
 	active = true
-	spawn_time = 0
+	visible = true
 	start_angle = _angle # in rads
 	start_point = _start_point
+	yield(get_tree().create_timer(lifetime), "timeout")
+	destroy()
 	
 func destroy():
 #	$AnimationPlayer.play("Shrink")
@@ -63,7 +63,11 @@ func destroy():
 	
 func check_collisions():
 	for collision in $Area.get_overlapping_bodies():
-		if collision.is_active():
+#		print("!!!!!" + collision.get_class())
+		if $Area.overlaps_body(collision) and \
+		collision.get_class() == "RigidBody" and \
+		collision.is_active() and \
+		collision.visible:
 			emit_signal("ememy_killed")
 			collision.kill()
 			destroy()

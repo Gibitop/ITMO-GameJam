@@ -23,19 +23,19 @@ func get_random_in_circle(radius):
 func get_enemy_position(min_range, max_range, player_pos):
 	var result = get_random_in_circle(max_range) 
 	while result.distance_to(player_pos) < min_range:
-		print(result.distance_to(player_pos))
+#		print(result.distance_to(player_pos))
 		result = get_random_in_circle(max_range)
 	return result
 	
 func get_enemy_from_pool():
-	print(str(enemies_pool.size()) + " " + str(active_enemies))
+#	print(str(enemies_pool.size()) + " " + str(active_enemies))
 	if enemies_pool.size() == active_enemies:
 		return null
 	return enemies_pool[active_enemies]
 	
 func spawn_player(root, pos):
 	var player_inst = spawn(root, player_scene, pos)
-	print("Player spawned succsessfully at position " + str(pos))
+#	print("Player spawned succsessfully at position " + str(pos))
 	return player_inst
 	
 func spawn_enemies(root, count: int, player_inst):
@@ -48,7 +48,7 @@ func spawn_enemies(root, count: int, player_inst):
 func spawn_enemy(root, pos, player_inst):
 	var enemy_inst = get_enemy_from_pool()
 	if enemy_inst == null:
-		print("spawner new enemy")
+#		print("spawner new enemy")
 		enemy_inst = spawn(root, enemy_scene, pos)
 		enemies_pool.append(enemy_inst)
 		root.mutation_timer.connect("timeout", enemy_inst, "_mutate")
@@ -59,7 +59,7 @@ func spawn_enemy(root, pos, player_inst):
 		enemy_inst.translation = pos
 	enemy_inst.activate()
 	active_enemies += 1
-	print("Enemy spawned at " + str(pos))
+#	print("Enemy spawned at " + str(pos))
 	return enemy_inst
 	
 func spawn(root, _scene, pos):
