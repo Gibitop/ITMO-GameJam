@@ -6,7 +6,7 @@ onready var collider: Area = $Area
 
 export (float)       var max_push_disance = 10
 export (float, EASE) var ease_curve = 0.0
-export (int)         var project_tile_count = 3
+export (int)         var projectile_count = 3
 export (float)       var default_kill_radius
 export (float)       var dashing_kill_radius
 export (float)       var DASHING_TIME = 333 # secs
@@ -27,6 +27,8 @@ var dashing = false
 var dashing_start_time = 0.0
 var dashing_target: Spatial
 var energy: int = 9999
+
+var projectile_lifetime = 2
 
 var money = 0
 var score = 0
@@ -93,9 +95,10 @@ func fire():
 		energy -= 1
 		emit_signal("energy_changed", energy)
 		print("FIRE")
-		var rad_delta = (2 * PI) / project_tile_count
-		for i in range(project_tile_count):
+		var rad_delta = (2 * PI) / projectile_count
+		for i in range(projectile_count):
 			var projectile_inst = projectile_scene.instance()
+			projectile_inst.lifetime = projectile_lifetime
 			projectile_inst.connect("ememy_killed", self, "_enemy_killed")
 			get_parent().add_child(projectile_inst)
 			projectile_inst.activate(i * rad_delta, translation)
