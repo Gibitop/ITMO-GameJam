@@ -36,6 +36,8 @@ var combo = 0
 var combo_timer: Timer
 var alive_timer: Timer
 
+
+
 func _ready():
 	alive_timer = Timer.new()
 	combo_timer = Timer.new()
@@ -62,6 +64,7 @@ func heal(amount):
 func damage(amount):
 	if invincible:
 		return
+	$Camera.shake()
 	amount = max(amount, 0)
 	health -= amount
 	emit_signal("health_changed", health)
@@ -187,5 +190,5 @@ func _process_dash(delta):
 			var direction = (dashing_target.translation - translation).normalized()
 			transform = transform.translated(direction * speed * ease(1 - estimated_time / DASHING_TIME, ease_curve))
 
-func shake_camera():
-	$Came
+func shake_camera(amplitude, time):
+	pass
