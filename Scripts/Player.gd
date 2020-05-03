@@ -5,8 +5,7 @@ onready var projectile_scene = preload("res://Scenes/Projectile.tscn")
 onready var collider: Area = $Area
 
 export (float)       var max_push_disance = 10
-export (float, EASE) var ease_curve = 0.0
-export (int)         var projectile_count = 3
+export (float, EASE) var ease_curve = 0.0 
 export (float)       var default_kill_radius
 export (float)       var dashing_kill_radius
 export (float)       var DASHING_TIME = 333 # secs
@@ -20,13 +19,17 @@ signal money_changed
 signal score_changed
 signal energy_changed
 signal health_changed
+signal high_score_changed
 
+var projectile_count = 3
 var invincible: bool = false
 var health = max_health;
 var dashing = false
 var dashing_start_time = 0.0
 var dashing_target: Spatial
-var energy: int = 9999
+var energy: int = 5
+var max_energy: int = 5
+var push_power:float = 1.5
 
 var projectile_lifetime = 2
 
@@ -35,6 +38,7 @@ var score = 0
 var combo = 0
 var combo_timer: Timer
 var alive_timer: Timer
+var user_data
 
 func _ready():
 	alive_timer = Timer.new()
@@ -44,9 +48,16 @@ func _ready():
 	alive_timer.start()
 	alive_timer.connect("timeout", self, "_increase_score")
 	combo_timer.connect("timeout", self, "_reset_combo")
-	
+	_load_stats_from_user_data()
 	$Area/CollisionShape.shape.radius = default_kill_radius
-	
+
+func _load_stats_from_user_data():
+	user_data = get_node("/root/UserData")
+	projectile_count = user_data.get_count_of_weapons()
+	max_energy = user_data.get_max_energy()
+	energy = max_energy
+	push_power = user_data.get_push_power()
+
 func _increase_score():
 	score += 1
 	emit_signal("score_changed", score)
@@ -75,8 +86,19 @@ func _die():
 #	Engine.time_scale = 0
 	get_tree().paused = true
 	get_parent().get_node("GameOver").visible = true
-	
-	
+	_apply_label_text()
+	user_data.set_money(user_data.get_money() + money)
+	var high_score = user_data.get_high_score()
+	if high_score < score:
+		emit_signal("highscore_changed", score)
+		user_data.set_high_score(score)
+	user_data.save()
+
+# Применяет актуальные данные к информации в меню (очки, деньги и тд)
+func _apply_label_text():
+	get_parent().get_node("GameOver/Container/Score").text = "Счёт: " + str(score) + " / " + str(user_data.get_high_score())
+	get_parent().get_node("GameOver/Container/Money").text = "Деньги: " + str(user_data.get_money()) + " + " + str(money)
+
 func dash(target):
 	print("Player dashing to " + str(target.translation))
 	dashing_start_time = 0
@@ -112,7 +134,7 @@ func _enemy_killed():
 
 func add_energy(amount=1):
 	amount = max(amount, 0)
-	energy += amount
+	energy = min(energy + amount, max_energy)
 	emit_signal("energy_changed", energy)
 
 
@@ -150,7 +172,7 @@ func _push_enemies(enemies):
 			continue
 		var push_direction = enemy.translation - translation
 		var push_strength = max(0, max_push_disance - push_direction.length())
-		var force = push_direction * push_strength * 1.5 
+		var force = push_direction * push_strength * push_power
 		enemy.apply_central_impulse(force)
 	yield(get_tree().create_timer(0.5), "timeout")
 	invincible = false
