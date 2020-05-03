@@ -65,6 +65,11 @@ func _mutate():
 			mutated = true
 			body.material = harmles
 			
+func force_mutate():
+	if !mutated and active:
+		mutated = true
+		body.material = harmles
+			
 func kill():
 	$Particles.restart()
 	$Body.visible = false
