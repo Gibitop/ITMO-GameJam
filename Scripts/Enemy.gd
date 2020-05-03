@@ -66,8 +66,14 @@ func _mutate():
 			body.material = harmles
 			
 func kill():
+	$Particles.restart()
+	$Body.visible = false
 	active = false
+	yield(get_tree().create_timer($Particles.lifetime), "timeout")
+
+	
 	visible = false
+	$Body.visible = true
 	highlighter.visible = false
 	translation = Vector3(200, 200, 200)
 	set_axis_velocity(Vector3(0, 0, 0))
