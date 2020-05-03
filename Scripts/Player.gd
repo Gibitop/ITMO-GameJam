@@ -18,6 +18,8 @@ signal player_died
 signal combo_changed
 signal money_changed
 signal score_changed
+signal energy_changed
+signal health_changed
 
 var health = max_health;
 var dashing = false
@@ -50,12 +52,14 @@ func _increase_score():
 # Восстанавливает amount очков здоровья
 func heal(amount):
 	health = min(health + amount, max_health)
+	emit_signal("health_changed", health)
 	print("Player healed " + str(amount) + " hp")
 	
 # Наносит amount урона
 func damage(amount):
 	amount = max(amount, 0)
 	health -= amount
+	emit_signal("health_changed", health)
 	if health <= 0:
 		pass
 		#_die()
@@ -81,6 +85,7 @@ func _reset_combo():
 func fire():
 	if (energy > 0):
 		energy -= 1
+		emit_signal("energy_changed", energy)
 		print("FIRE")
 		var rad_delta = (2 * PI) / project_tile_count
 		for i in range(project_tile_count):
@@ -99,6 +104,7 @@ func _enemy_killed():
 func add_energy(amount=1):
 	amount = max(amount, 0)
 	energy += amount
+	emit_signal("energy_changed", energy)
 
 
 func _input(event):
