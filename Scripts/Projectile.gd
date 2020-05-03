@@ -57,7 +57,8 @@ func destroy():
 #	yield($AnimationPlayer, "animation_finished")
 	active = false
 	visible = false
-#	free()
+	yield(get_tree().create_timer(1), "timeout")
+	free()
 	
 	
 func check_collisions():

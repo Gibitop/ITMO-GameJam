@@ -12,6 +12,7 @@
 [node name="Player" type="Spatial"]
 script = ExtResource( 1 )
 ease_curve = -0.5
+project_tile_count = 12
 default_kill_radius = 1.0
 dashing_kill_radius = 3.0
 DASHING_TIME = 3.0
