@@ -26,6 +26,7 @@ func activate():
 	active = true
 	visible = true
 	mutated = false
+	$OmniLight.light_color = Color(1, 0, 0)
 	body.material = harmful
 	
 func is_active():
@@ -69,8 +70,10 @@ func kill():
 	set_axis_velocity(Vector3(0, 0, 0))
 
 func highlight():
-	highlighter.visible = true
+	$OmniLight.light_color = Color(1, 1, 1)
+#	highlighter.visible = true
 	
 func unhighlight():
-	highlighter.visible = false
+	$OmniLight.light_color = Color(0, 1, 0)
+#	highlighter.visible = false
 	
