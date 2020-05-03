@@ -29,7 +29,7 @@ func _ready():
 	var current_energy = user_data.get_max_energy()
 	var current_projectiles = user_data.get_count_of_weapons()
 	var current_push = user_data.get_push_power()
-	var current_push_level = _log2(current_push) + 1
+	var current_push_level = ceil((current_push - 1) / 0.2)
 	var current_money = user_data.get_money()
 	money_label.text = "Деньги: " + str(current_money)
 	energy_current_label.text = str(current_energy)
@@ -39,7 +39,7 @@ func _ready():
 	
 	energy_cost_label.text = str(1000 * pow(2, current_energy - INIT_ENERGY))
 	projectiles_cost_label.text = str(1000 * pow(2, current_projectiles - INIT_PROJECTILES))
-	push_cost_label.text = str(1000 * pow(2, current_push_level - 1))
+	push_cost_label.text = str(1000 * pow(2, current_push_level))
 	
 	if current_money < 1000 * pow(2, current_energy - INIT_ENERGY):
 		energy_buy_button.disabled = true
@@ -69,8 +69,8 @@ func _on_BuyProjectiles_pressed():
 
 func _on_BuyPush_pressed():
 	var current_push = user_data.get_push_power()
-	var current_push_level = _log2(current_push) + 1
-	user_data.set_push_power(user_data.get_push_power() * 2)
+	var current_push_level = ceil((current_push - 1) / 0.2)
+	user_data.set_push_power(user_data.get_push_power() + 0.2)
 	user_data.set_money(user_data.get_money() - 1000 * pow(2, current_push_level - 1))
 	user_data.save()
 	_ready()
