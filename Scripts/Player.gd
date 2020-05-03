@@ -120,6 +120,22 @@ func _process(delta):
 	$PlayerBody.look_at(cursor_world_position, Vector3(0, 1, 0))
 	var pointer_z_scale = (translation - cursor_world_position).length() / 100
 	$PlayerBody/Pointer.scale = Vector3(0.5, 0.5, max(min(pointer_z_scale, 1), 0.2) )
+
+func _physics_process(delta):
+	_process_collisions()
+	_process_dash(delta)
+
+func _push_enemies(enemies):
+	print("Pushing")
+	for enemy in enemies:
+		if not enemy.is_active():
+			continue
+		var push_direction = enemy.translation - translation
+		var push_strength = max(0, max_push_disance - push_direction.length())
+		var force = push_direction * push_strength 
+		enemy.apply_central_impulse(force)
+
+func _process_collisions():
 	for collision in collider.get_overlapping_bodies():
 		if collision.is_active():
 			if collision.isMutated() or dashing:
@@ -136,9 +152,8 @@ func _process(delta):
 				emit_signal("combo_changed", combo)
 			collision.kill()
 
-	
 
-func _physics_process(delta):
+func _process_dash(delta):
 	if dashing:
 		dashing_start_time = dashing_start_time + delta
 		var estimated_time = DASHING_TIME - dashing_start_time
@@ -151,13 +166,3 @@ func _physics_process(delta):
 			var speed = estimated_distance / estimated_time * delta * 1000 # units/millis
 			var direction = (dashing_target.translation - translation).normalized()
 			transform = transform.translated(direction * speed * ease(1 - estimated_time / DASHING_TIME, ease_curve))
-
-func _push_enemies(enemies):
-	print("Pushing")
-	for enemy in enemies:
-		if not enemy.is_active():
-			continue
-		var push_direction = enemy.translation - translation
-		var push_strength = max(0, max_push_disance - push_direction.length())
-		var force = push_direction * push_strength 
-		enemy.apply_central_impulse(force)

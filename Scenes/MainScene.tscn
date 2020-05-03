@@ -8,6 +8,7 @@
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 2 )
+auto_aim_sensitivity = 10.0
 
 [node name="CSGTorus" type="CSGTorus" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0754166, 0, 0.00225449 )

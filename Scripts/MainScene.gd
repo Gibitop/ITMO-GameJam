@@ -11,6 +11,10 @@ var nearest_enemy: Spatial
 var mutation_timer: Timer
 var spawner
 
+const DASH_BUTTON = BUTTON_LEFT
+
+export (float) var auto_aim_sensitivity = 5
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	mutation_timer = Timer.new()
@@ -47,15 +51,15 @@ func _find_nearest_enemy_to_cursor(cursor_position):
 		if not enemy.is_active() or not enemy.isMutated(): 
 			continue
 		var distance = enemy.translation.distance_to(cursor_position)
-		if distance < min_dist:
+		if distance < min_dist and distance < auto_aim_sensitivity:
 			min_dist = distance
 			_nearest_enemy = enemy
 	return _nearest_enemy
 
 func _input(event):
-	if event is InputEventKey:
+	if event is InputEventMouseButton:
 		if event.is_pressed() \
-		and event.get_scancode_with_modifiers() == KEY_Q \
+		and event.get_button_index() == DASH_BUTTON \
 		and not event.is_echo() \
 		and nearest_enemy != null:
 			player.dash(nearest_enemy)

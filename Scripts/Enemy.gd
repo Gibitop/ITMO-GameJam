@@ -18,6 +18,7 @@ var pool_index: int
 
 onready var body = $Body
 onready var highlighter = $Highlighter
+onready var death_particles: Particles = $Particles
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -24,14 +24,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if active:
-		check_collisions()
 		if spawn_time > lifetime and not $AnimationPlayer.is_playing():
 			destroy()
 		else:
 			spawn_time += delta
 			var next_point: Vector3 = _get_next_spiral_point(delta)
 			transform = transform.translated(next_point - translation)
-	
+
+func _physics_process(delta):
+	if active:
+		check_collisions()
+
 func _get_next_spiral_point(delta):
 	distance += speed * delta * 100
 	angle = distance * curvature + start_angle

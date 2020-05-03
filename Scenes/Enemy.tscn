@@ -1,10 +1,24 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://materials/arena.tres" type="Material" id=2]
 [ext_resource path="res://materials/harmful.tres" type="Material" id=3]
+[ext_resource path="res://Textures/circle_05.png" type="Texture" id=4]
+[ext_resource path="res://materials/enemy_death_particle.tres" type="Material" id=5]
 
 [sub_resource type="SphereShape" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_unshaded = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="QuadMesh" id=3]
+material = SubResource( 2 )
 
 [node name="Enemy" type="RigidBody"]
 linear_damp = 0.99
@@ -29,3 +43,14 @@ material = ExtResource( 2 )
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.05755, 0 )
 omni_range = 66.529
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 0.999995, 1.01229e-09, 0.00310668, 0, -1, 3.25841e-07, 0.00310668, -3.2584e-07, -0.999995, 0, 0, 0 )
+emitting = false
+amount = 200
+lifetime = 0.28
+one_shot = true
+explosiveness = 0.97
+randomness = 1.0
+process_material = ExtResource( 5 )
+draw_pass_1 = SubResource( 3 )

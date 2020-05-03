@@ -1,0 +1,14 @@
+[gd_resource type="ParticlesMaterial" format=2]
+
+[resource]
+lifetime_randomness = 0.1
+spread = 180.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 34.48
+initial_velocity_random = 0.71
+linear_accel = -75.86
+damping = 10.34
+damping_random = 0.05
+scale = 0.4
+scale_random = 0.26
