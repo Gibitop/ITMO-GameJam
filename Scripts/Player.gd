@@ -186,3 +186,6 @@ func _process_dash(delta):
 			var speed = estimated_distance / estimated_time * delta * 1000 # units/millis
 			var direction = (dashing_target.translation - translation).normalized()
 			transform = transform.translated(direction * speed * ease(1 - estimated_time / DASHING_TIME, ease_curve))
+
+func shake_camera():
+	$Came
