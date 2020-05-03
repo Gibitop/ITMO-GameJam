@@ -10,6 +10,9 @@ var player: Spatial
 var nearest_enemy: Spatial
 var mutation_timer: Timer
 var spawner
+var super_event_treshold = 1000
+
+signal force_mutate
 
 const DASH_BUTTON = BUTTON_LEFT
 
@@ -23,6 +26,7 @@ func _ready():
 	spawner = spawner_script.new(player_scene, enemy_scene)
 	player = spawner.spawn_player(self, Vector3(0, 0, 0))
 	player.connect("combo_changed", $HUD, "update_combo")
+	player.connect("score_changed", self, "super_event")
 	player.connect("money_changed", $HUD, "update_money")
 	player.connect("score_changed", $HUD, "update_experience")
 	player.connect("health_changed", $HUD, "update_hp")
@@ -33,6 +37,11 @@ func _ready():
 	
 	spawner.spawn_enemies(self, 10, player)
 	test()
+	
+func super_event(val):
+	if val > super_event_treshold:
+		super_event_treshold *= 10
+		emit_signal("force_mutate")
 
 func test():
 	while true:

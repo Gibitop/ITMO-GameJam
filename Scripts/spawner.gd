@@ -52,6 +52,7 @@ func spawn_enemy(root, pos, player_inst):
 		enemy_inst = spawn(root, enemy_scene, pos)
 		enemies_pool.append(enemy_inst)
 		root.mutation_timer.connect("timeout", enemy_inst, "_mutate")
+		root.connect("force_mutate", enemy_inst, "force_mutate")
 		enemy_inst.set_player(player_inst)
 		enemy_inst.set_spawner(self)
 		swap_enemies_in_pool(enemies_pool.size() - 1, active_enemies)
