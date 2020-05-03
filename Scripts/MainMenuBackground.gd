@@ -19,6 +19,8 @@ func _ready():
 	player = spawner.spawn_player(self, Vector3(0, 0, 0))
 	
 	player.get_node("PlayerBody").get_node("Pointer").visible = false
+	player.projectile_lifetime = 10
+	player.projectile_count = 9
 	player.invincible = true
 	
 	mutation_timer = Timer.new()
