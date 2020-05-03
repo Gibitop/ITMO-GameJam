@@ -18,6 +18,10 @@ func _ready():
 	mutation_timer.start()
 	spawner = spawner_script.new(player_scene, enemy_scene)
 	player = spawner.spawn_player(self, Vector3(0, 0, 0))
+	player.connect("combo_changed", $HUD, "update_combo")
+	player.connect("money_changed", $HUD, "update_money")
+	player.connect("score_changed", $HUD, "update_experience")
+	
 	spawner.spawn_enemies(self, 10, player)
 	test()
 

@@ -74,6 +74,7 @@ func dash(target):
 
 func _reset_combo():
 	print('Combo reset (combo was: ', combo, ')')
+	emit_signal("combo_changed", 0)
 	combo_timer.stop()
 	combo = 0
 
@@ -84,9 +85,16 @@ func fire():
 		var rad_delta = (2 * PI) / project_tile_count
 		for i in range(project_tile_count):
 			var projectile_inst = projectile_scene.instance()
+			projectile_inst.connect("ememy_killed", self, "_enemy_killed")
 			get_parent().add_child(projectile_inst)
 			projectile_inst.activate(i * rad_delta, translation)
 
+
+func _enemy_killed():
+	money += 1
+	score += combo + 1
+	emit_signal("money_changed", money)
+	emit_signal("score_changed", score)
 
 func add_energy(amount=1):
 	amount = max(amount, 0)
@@ -116,14 +124,16 @@ func _process(delta):
 		if collision.is_active():
 			if collision.isMutated() or dashing:
 				add_energy(1)
+				score += combo + 1
+				emit_signal("score_changed", score)
+				money += 1
+				emit_signal("money_changed", money)
 			else:
 				damage(1)
 			if dashing:
 				combo_timer.start()
 				combo += 1
 				emit_signal("combo_changed", combo)
-			money += 1
-			emit_signal("money_changed", money)
 			collision.kill()
 
 	
