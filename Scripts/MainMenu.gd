@@ -23,3 +23,7 @@ func _on_PlayButton_pressed():
 
 func _on_ExitButton_pressed():
 	get_tree().quit(0)
+
+
+func _on_ExitButton3_pressed():
+	get_tree().change_scene("res://Scenes/UI/RPGScene.tscn")

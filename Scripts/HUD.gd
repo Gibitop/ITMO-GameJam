@@ -12,7 +12,7 @@ func update_combo(combo):
 
 
 func update_experience(experience):
-	$TL/Experience.text = 'Опыт: ' + str(experience)
+	$TL/Experience.text = 'Счёт: ' + str(experience)
 
 
 func update_money(money):

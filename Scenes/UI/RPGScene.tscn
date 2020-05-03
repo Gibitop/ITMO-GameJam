@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Themes/MainTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/Upgrade.gd" type="Script" id=2]
 
 [node name="RPG" type="Control"]
 anchor_right = 1.0
@@ -10,6 +11,7 @@ margin_top = 20.0
 margin_right = -20.0
 margin_bottom = -20.0
 theme = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -26,7 +28,10 @@ margin_right = 984.0
 margin_bottom = 44.0
 alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="ToMenu" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 271.0
+margin_right = 564.0
+margin_bottom = 44.0
 text = "Вернуться в меню"
 
 [node name="Money" type="Label" parent="VBoxContainer/HBoxContainer2"]
@@ -54,7 +59,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 172.0
 margin_right = 984.0
-margin_bottom = 591.0
+margin_bottom = 560.0
 size_flags_vertical = 3
 alignment = 1
 __meta__ = {
@@ -63,22 +68,22 @@ __meta__ = {
 
 [node name="VSplitContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_right = 320.0
-margin_bottom = 419.0
+margin_bottom = 388.0
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VSplitContainer"]
-margin_top = 83.0
+margin_top = 52.0
 margin_right = 320.0
-margin_bottom = 121.0
+margin_bottom = 90.0
 text = "Максимум энергии"
 align = 1
 autowrap = true
 
 [node name="Spacer3" type="Label" parent="VBoxContainer/HBoxContainer/VSplitContainer"]
-margin_top = 125.0
+margin_top = 94.0
 margin_right = 320.0
-margin_bottom = 245.0
+margin_bottom = 214.0
 text = "
 
 "
@@ -87,58 +92,58 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/VSplitContainer"]
-margin_top = 249.0
+margin_top = 218.0
 margin_right = 320.0
-margin_bottom = 287.0
+margin_bottom = 256.0
 text = "Сейчас: 3"
 align = 1
 
 [node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer/VSplitContainer"]
-margin_top = 291.0
+margin_top = 260.0
 margin_right = 320.0
-margin_bottom = 329.0
+margin_bottom = 298.0
 text = "Стоит: 1000"
 align = 1
 
 [node name="Spacer4" type="Label" parent="VBoxContainer/HBoxContainer/VSplitContainer"]
-margin_top = 333.0
+margin_top = 302.0
 margin_right = 320.0
-margin_bottom = 371.0
+margin_bottom = 340.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer/VSplitContainer"]
-margin_top = 375.0
+[node name="BuyEnergy" type="Button" parent="VBoxContainer/HBoxContainer/VSplitContainer"]
+margin_top = 344.0
 margin_right = 320.0
-margin_bottom = 419.0
+margin_bottom = 388.0
 size_flags_vertical = 0
 text = "Купить"
 
 [node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
 margin_left = 324.0
 margin_right = 328.0
-margin_bottom = 419.0
+margin_bottom = 388.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 332.0
 margin_right = 652.0
-margin_bottom = 419.0
+margin_bottom = 388.0
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Label6" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
-margin_top = 42.0
+margin_top = 11.0
 margin_right = 320.0
-margin_bottom = 121.0
+margin_bottom = 90.0
 text = "Количество снарядов"
 align = 1
 autowrap = true
 
 [node name="Spacer3" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
-margin_top = 125.0
+margin_top = 94.0
 margin_right = 320.0
-margin_bottom = 245.0
+margin_bottom = 214.0
 text = "
 
 "
@@ -147,58 +152,58 @@ __meta__ = {
 }
 
 [node name="Label5" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
-margin_top = 249.0
+margin_top = 218.0
 margin_right = 320.0
-margin_bottom = 287.0
+margin_bottom = 256.0
 text = "Сейчас: 3"
 align = 1
 
 [node name="Label4" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
-margin_top = 291.0
+margin_top = 260.0
 margin_right = 320.0
-margin_bottom = 329.0
+margin_bottom = 298.0
 text = "Стоит: 1000"
 align = 1
 
 [node name="Spacer5" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
-margin_top = 333.0
+margin_top = 302.0
 margin_right = 320.0
-margin_bottom = 371.0
+margin_bottom = 340.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
-margin_top = 375.0
+[node name="BuyProjectiles" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 344.0
 margin_right = 320.0
-margin_bottom = 419.0
+margin_bottom = 388.0
 size_flags_vertical = 0
 text = "Купить"
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
 margin_left = 656.0
 margin_right = 660.0
-margin_bottom = 419.0
+margin_bottom = 388.0
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 664.0
 margin_right = 984.0
-margin_bottom = 419.0
+margin_bottom = 388.0
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Label9" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
-margin_top = 83.0
+margin_top = 52.0
 margin_right = 320.0
-margin_bottom = 121.0
+margin_bottom = 90.0
 text = "Сила отталкивания"
 align = 1
 autowrap = true
 
 [node name="Spacer4" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
-margin_top = 125.0
+margin_top = 94.0
 margin_right = 320.0
-margin_bottom = 245.0
+margin_bottom = 214.0
 text = "
 
 "
@@ -207,30 +212,34 @@ __meta__ = {
 }
 
 [node name="Label8" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
-margin_top = 249.0
+margin_top = 218.0
 margin_right = 320.0
-margin_bottom = 287.0
+margin_bottom = 256.0
 text = "Сейчас: 3"
 align = 1
 
 [node name="Label7" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
-margin_top = 291.0
+margin_top = 260.0
 margin_right = 320.0
-margin_bottom = 329.0
+margin_bottom = 298.0
 text = "Стоит: 1000"
 align = 1
 
 [node name="Spacer6" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
-margin_top = 333.0
+margin_top = 302.0
 margin_right = 320.0
-margin_bottom = 371.0
+margin_bottom = 340.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
-margin_top = 375.0
+[node name="BuyPush" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
+margin_top = 344.0
 margin_right = 320.0
-margin_bottom = 419.0
+margin_bottom = 388.0
 size_flags_vertical = 0
 text = "Купить"
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/ToMenu" to="." method="_on_ToMenu_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VSplitContainer/BuyEnergy" to="." method="_on_BuyEnergy_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer2/BuyProjectiles" to="." method="_on_BuyProjectiles_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer3/BuyPush" to="." method="_on_BuyPush_pressed"]

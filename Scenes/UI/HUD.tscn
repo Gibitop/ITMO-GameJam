@@ -27,7 +27,7 @@ __meta__ = {
 [node name="Experience" type="Label" parent="TL"]
 margin_right = 185.0
 margin_bottom = 38.0
-text = "Опыт:"
+text = "Счёт:"
 
 [node name="Cobmo" type="Label" parent="TL"]
 margin_top = 42.0

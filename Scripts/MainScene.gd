@@ -52,9 +52,13 @@ func _on_restart_button_pressed():
 func _on_main_menu_button_pressed():
 	get_tree().change_scene("res://Scenes/UI/MainMenuBackground.tscn")
 
+func _on_ToRPG_button_pressed():
+	get_tree().change_scene("res://Scenes/UI/RPGScene.tscn")
+
 func _connect_buttons_signals():
 	$GameOver/Container/RestartButton.connect("pressed", self, "_on_restart_button_pressed")
 	$GameOver/Container/ToMenuButton.connect("pressed", self, "_on_main_menu_button_pressed")
+	$GameOver/Container/ToRPG.connect("pressed", self, "_on_main_menu_button_pressed")
 
 func super_event(val):
 	if val > super_event_treshold:
