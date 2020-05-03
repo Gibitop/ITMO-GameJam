@@ -11,6 +11,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
+
 [node name="Blur" parent="." instance=ExtResource( 2 )]
 color = Color( 0.968627, 0.054902, 0.054902, 0.784314 )
 
@@ -20,9 +25,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -154.5
-margin_top = -67.0
+margin_top = -175.0
 margin_right = 154.5
-margin_bottom = 67.0
+margin_bottom = 175.0
 size_flags_horizontal = 4
 theme = ExtResource( 1 )
 alignment = 1
@@ -38,16 +43,57 @@ text = "Вы проиграли"
 align = 1
 valign = 1
 
-[node name="RestartButton" type="Button" parent="Container"]
+[node name="Spacer1" type="Label" parent="Container"]
 margin_top = 42.0
 margin_right = 309.0
-margin_bottom = 86.0
+margin_bottom = 80.0
+size_flags_stretch_ratio = 0.0
+align = 1
+valign = 1
+
+[node name="Score" type="Label" parent="Container"]
+margin_top = 84.0
+margin_right = 309.0
+margin_bottom = 122.0
+size_flags_stretch_ratio = 0.0
+text = "Счет: 0 / 0"
+align = 1
+valign = 1
+
+[node name="Money" type="Label" parent="Container"]
+margin_top = 126.0
+margin_right = 309.0
+margin_bottom = 164.0
+size_flags_stretch_ratio = 0.0
+text = "Деньги: 0 + 0"
+align = 1
+valign = 1
+
+[node name="Spacer2" type="Label" parent="Container"]
+margin_top = 168.0
+margin_right = 309.0
+margin_bottom = 206.0
+size_flags_stretch_ratio = 0.0
+align = 1
+valign = 1
+
+[node name="RestartButton" type="Button" parent="Container"]
+margin_top = 210.0
+margin_right = 309.0
+margin_bottom = 254.0
 size_flags_vertical = 4
 text = "Попробовать снова"
 
-[node name="ToMenuButton" type="Button" parent="Container"]
-margin_top = 90.0
+[node name="ToRPG" type="Button" parent="Container"]
+margin_top = 258.0
 margin_right = 309.0
-margin_bottom = 134.0
+margin_bottom = 302.0
+size_flags_vertical = 4
+text = "К улучшениям"
+
+[node name="ToMenuButton" type="Button" parent="Container"]
+margin_top = 306.0
+margin_right = 309.0
+margin_bottom = 350.0
 size_flags_vertical = 4
 text = "Вернуться в меню"
