@@ -10,6 +10,8 @@ var distance: float = 0
 var active: bool = false
 var spawn_time
 
+signal ememy_killed
+
 export(float) var speed = 1
 export(float) var curvature = 5
 export(float) var lifetime = 2
@@ -58,6 +60,7 @@ func destroy():
 func check_collisions():
 	for collision in $Area.get_overlapping_bodies():
 		if collision.is_active():
+			emit_signal("ememy_killed")
 			collision.kill()
 			destroy()
 			break
