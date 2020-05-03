@@ -46,6 +46,7 @@ func _ready():
 	
 func _on_restart_button_pressed():
 	print("restart")
+	get_tree().paused = false
 	get_tree().change_scene("res://Scenes/MainScene.tscn")
 	
 func _on_main_menu_button_pressed():

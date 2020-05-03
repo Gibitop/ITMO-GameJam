@@ -122,7 +122,10 @@ func _input(event):
 			
 		if event.get_scancode_with_modifiers() == KEY_E \
 		and event.is_pressed() \
-		and not event.is_echo():
+		and not event.is_echo() \
+		and energy > 0:
+			energy -= 1
+			emit_signal("energy_changed", energy)
 			_push_enemies(get_parent().get_all_enemies())
 
 func _process(delta):
@@ -144,7 +147,7 @@ func _push_enemies(enemies):
 			continue
 		var push_direction = enemy.translation - translation
 		var push_strength = max(0, max_push_disance - push_direction.length())
-		var force = push_direction * push_strength 
+		var force = push_direction * push_strength * 1.5 
 		enemy.apply_central_impulse(force)
 	yield(get_tree().create_timer(0.5), "timeout")
 	invincible = false
