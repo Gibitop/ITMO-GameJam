@@ -1,0 +1,22 @@
+[gd_resource type="Environment" load_steps=2 format=2]
+
+[sub_resource type="ProceduralSky" id=1]
+radiance_size = 1
+sky_curve = 0.428114
+sky_energy = 1.47
+ground_curve = 0.2884
+ground_energy = 0.74
+sun_color = Color( 0.827451, 1, 0, 1 )
+
+[resource]
+background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.0
+fog_sun_amount = 0.17
+fog_depth_curve = 0.217638
+fog_height_min = -592.2
+fog_height_max = -1634.4
+glow_enabled = true
+glow_intensity = 6.79
+glow_strength = 0.69
+glow_bloom = 1.0

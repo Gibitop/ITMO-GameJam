@@ -9,10 +9,12 @@ export (float) var max_mutation_distance
 export (float) var max_mutation_chance
 export (float) var arena_radius
 
-
 var active: bool = false
 var mutated: bool = false
 var player: Spatial
+
+var spawner
+var pool_index: int
 
 onready var body = $Body
 onready var highlighter = $Highlighter
@@ -68,6 +70,7 @@ func kill():
 	highlighter.visible = false
 	translation = Vector3(200, 200, 200)
 	set_axis_velocity(Vector3(0, 0, 0))
+	spawner.on_enemy_death(pool_index)
 
 func highlight():
 	$OmniLight.light_color = Color(1, 1, 1)
@@ -76,4 +79,13 @@ func highlight():
 func unhighlight():
 	$OmniLight.light_color = Color(0, 1, 0)
 #	highlighter.visible = false
+
+func set_pool_index(ind):
+	pool_index = ind
+
+func get_pool_index():
+	return pool_index
+	
+func set_spawner(_spawner):
+	spawner = _spawner
 	

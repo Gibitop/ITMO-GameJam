@@ -48,8 +48,8 @@ func activate(_angle, _start_point):
 	start_point = _start_point
 	
 func destroy():
-	$AnimationPlayer.play("Shrink")
-	yield($AnimationPlayer, "animation_finished")
+#	$AnimationPlayer.play("Shrink")
+#	yield($AnimationPlayer, "animation_finished")
 	active = false
 	visible = false
 #	free()

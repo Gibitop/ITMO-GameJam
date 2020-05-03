@@ -1,9 +1,12 @@
 extends Node
 
+var utils = preload("res://Scripts/utils.gd")
+
 var enemy_scene
 var player_scene
 
 var enemies_pool = []
+var active_enemies = 0
 
 func _init(_player_scene, _enemy_scene):
 	enemy_scene = _enemy_scene
@@ -25,11 +28,10 @@ func get_enemy_position(min_range, max_range, player_pos):
 	return result
 	
 func get_enemy_from_pool():
-	for enemy in enemies_pool:
-		if not enemy.is_active():
-			print("enemy got from pool")
-			return enemy
-	return null
+	print(str(enemies_pool.size()) + " " + str(active_enemies))
+	if enemies_pool.size() == active_enemies:
+		return null
+	return enemies_pool[active_enemies]
 	
 func spawn_player(root, pos):
 	var player_inst = spawn(root, player_scene, pos)
@@ -51,9 +53,12 @@ func spawn_enemy(root, pos, player_inst):
 		enemies_pool.append(enemy_inst)
 		root.mutation_timer.connect("timeout", enemy_inst, "_mutate")
 		enemy_inst.set_player(player_inst)
+		enemy_inst.set_spawner(self)
+		swap_enemies_in_pool(enemies_pool.size() - 1, active_enemies)
 	else:
 		enemy_inst.translation = pos
 	enemy_inst.activate()
+	active_enemies += 1
 	print("Enemy spawned at " + str(pos))
 	return enemy_inst
 	
@@ -65,3 +70,16 @@ func spawn(root, _scene, pos):
 	
 func get_enemies_pool():
 	return enemies_pool
+	
+func on_enemy_death(enemy_ind):
+	active_enemies -= 1
+	swap_enemies_in_pool(enemy_ind, active_enemies)
+
+func swap_enemies_in_pool(a, b):
+	enemies_pool[b].set_pool_index(a)
+	enemies_pool[a].set_pool_index(b)
+	if a == b:
+		return
+	var temp = enemies_pool[a]
+	enemies_pool[a] = enemies_pool[b]
+	enemies_pool[b] = temp

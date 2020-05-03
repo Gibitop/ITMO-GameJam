@@ -24,7 +24,7 @@ func _ready():
 func test():
 	while true:
 		yield(get_tree().create_timer(3), "timeout")
-		spawner.spawn_enemies(self, 10, player)
+		spawner.spawn_enemies(self, 15, player)
 
 func _process(delta):
 	var cursor_position = utils.get_cursor_world_position(get_viewport(), player.get_node("Camera"))
