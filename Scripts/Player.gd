@@ -121,10 +121,6 @@ func _input(event):
 		and event.is_pressed() \
 		and not event.is_echo():
 			_push_enemies(get_parent().get_all_enemies())
-			invincible = true
-			yield(get_tree().create_timer(0.5), "timeout")
-			invincible = false
-
 
 func _process(delta):
 	var viewport  = get_parent().get_viewport()
@@ -138,6 +134,7 @@ func _physics_process(delta):
 	_process_dash(delta)
 
 func _push_enemies(enemies):
+	invincible = true
 	print("Pushing")
 	for enemy in enemies:
 		if not enemy.is_active():
@@ -146,6 +143,8 @@ func _push_enemies(enemies):
 		var push_strength = max(0, max_push_disance - push_direction.length())
 		var force = push_direction * push_strength 
 		enemy.apply_central_impulse(force)
+	yield(get_tree().create_timer(0.5), "timeout")
+	invincible = false
 
 func _process_collisions():
 	for collision in collider.get_overlapping_bodies():
