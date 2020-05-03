@@ -21,6 +21,11 @@ func _ready():
 	player.connect("combo_changed", $HUD, "update_combo")
 	player.connect("money_changed", $HUD, "update_money")
 	player.connect("score_changed", $HUD, "update_experience")
+	player.connect("health_changed", $HUD, "update_hp")
+	player.connect("energy_changed", $HUD, "update_energy")
+	$HUD.update_energy(player.energy)
+	$HUD.update_hp(player.health)
+	
 	
 	spawner.spawn_enemies(self, 10, player)
 	test()
