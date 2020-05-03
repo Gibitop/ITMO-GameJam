@@ -96,6 +96,8 @@ func _find_nearest_enemy_to_cursor(cursor_position):
 
 func _input(event):
 	if event is InputEventMouseButton:
+		if player.health <= 0:
+			return
 		if event.is_pressed() \
 		and event.get_button_index() == DASH_BUTTON \
 		and not event.is_echo() \

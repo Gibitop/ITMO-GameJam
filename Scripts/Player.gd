@@ -73,7 +73,7 @@ func heal(amount):
 	
 # Наносит amount урона
 func damage(amount):
-	if invincible:
+	if invincible or health <= 0:
 		return
 	$Camera.shake()
 	amount = max(amount, 0)
@@ -87,7 +87,10 @@ func damage(amount):
 func _die():
 #	emit_signal("player_died")
 #	Engine.time_scale = 0
-	get_tree().paused = true
+#	get_tree().paused = true
+	visible = false
+	alive_timer.stop()
+	
 	get_parent().get_node("GameOver").visible = true
 	_apply_label_text()
 	user_data.set_money(user_data.get_money() + money)
@@ -130,6 +133,8 @@ func fire():
 
 
 func _enemy_killed():
+	if health <= 0:
+		return
 	money += 1
 	score += combo + 1
 	emit_signal("money_changed", money)
@@ -142,6 +147,8 @@ func add_energy(amount=1):
 
 
 func _input(event):
+	if health <= 0:
+		return
 	if event is InputEventKey:
 		if event.get_scancode_with_modifiers() == FIRE_BUTTON \
 		and event.is_pressed() \
@@ -184,11 +191,12 @@ func _process_collisions():
 	for collision in collider.get_overlapping_bodies():
 		if collision.is_active():
 			if collision.isMutated() or dashing:
-				add_energy(1)
-				score += combo + 1
-				emit_signal("score_changed", score)
-				money += 1
-				emit_signal("money_changed", money)
+				if health > 0:
+					add_energy(1)
+					score += combo + 1
+					emit_signal("score_changed", score)
+					money += 1
+					emit_signal("money_changed", money)
 			else:
 				damage(1)
 			if dashing:
