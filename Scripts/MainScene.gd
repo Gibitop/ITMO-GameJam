@@ -49,7 +49,7 @@ func _on_restart_button_pressed():
 	get_tree().change_scene("res://Scenes/MainScene.tscn")
 	
 func _on_main_menu_button_pressed():
-	get_tree().change_scene("res://Scenes/UI/MainMenu.tscn")
+	get_tree().change_scene("res://Scenes/UI/MainMenuBackground.tscn")
 
 func _connect_buttons_signals():
 	$GameOver/Container/RestartButton.connect("pressed", self, "_on_restart_button_pressed")

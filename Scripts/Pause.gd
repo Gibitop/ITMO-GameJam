@@ -6,4 +6,4 @@ func _on_ContinueButton_pressed():
 
 
 func _on_ToMenuButton_pressed():
-	get_tree().change_scene("res://Scenes/UI/MainMenu.tscn")
+	get_tree().change_scene("res://Scenes/UI/MainMenuBackground.tscn")

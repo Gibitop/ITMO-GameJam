@@ -70,8 +70,8 @@ func damage(amount):
 # TODO: обработка смерти
 func _die():
 #	emit_signal("player_died")
-	Engine.time_scale = 0
-#	get_tree().paused = true
+#	Engine.time_scale = 0
+	get_tree().paused = true
 	get_parent().get_node("GameOver").visible = true
 	
 	
