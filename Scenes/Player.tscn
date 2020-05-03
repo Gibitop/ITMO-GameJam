@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Scripts/Pointer.gd" type="Script" id=4]
 [ext_resource path="res://motion_blur/motion_blur.tscn" type="PackedScene" id=5]
 [ext_resource path="res://materials/projectile.tres" type="Material" id=6]
+[ext_resource path="res://Audio/dash.wav" type="AudioStream" id=7]
+[ext_resource path="res://Audio/Hurt.wav" type="AudioStream" id=8]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -44,3 +46,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 light_color = Color( 0.666667, 0, 1, 1 )
 light_energy = 5.0
 omni_range = 250.0
+
+[node name="DashSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="PushSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )

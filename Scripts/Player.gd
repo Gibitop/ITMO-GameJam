@@ -88,6 +88,7 @@ func _die():
 #	emit_signal("player_died")
 #	Engine.time_scale = 0
 #	get_tree().paused = true
+	$DeathSound.play()
 	visible = false
 	alive_timer.stop()
 	
@@ -108,6 +109,7 @@ func _apply_label_text():
 func dash(target):
 	print("Player dashing to " + str(target.translation))
 	dashing_start_time = 0
+	$DashSound.play()
 	$Area/CollisionShape.shape.radius = dashing_kill_radius
 	dashing = true
 	dashing_target = target
@@ -120,6 +122,7 @@ func _reset_combo():
 
 func fire():
 	if (energy > 0):
+		$ShootSound.play()
 		energy -= 1
 		emit_signal("energy_changed", energy)
 		print("FIRE")
@@ -160,6 +163,7 @@ func _input(event):
 		and not event.is_echo() \
 		and energy > 0:
 			energy -= 1
+			$PushSound.play()
 			emit_signal("energy_changed", energy)
 			_push_enemies(get_parent().get_all_enemies())
 

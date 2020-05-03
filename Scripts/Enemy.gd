@@ -62,6 +62,7 @@ func _mutate():
 		var distance = (player.translation - translation).length()
 		var chance = (max_mutation_chance * max(1 - distance / max_mutation_distance, 0))
 		if randf() <= chance:
+			$MutateSound.play()
 			mutated = true
 			body.material = harmles
 			
@@ -72,6 +73,7 @@ func force_mutate():
 			
 func kill():
 	$Particles.restart()
+	$DeathSound.play()
 	$Body.visible = false
 	active = false
 	yield(get_tree().create_timer($Particles.lifetime), "timeout")

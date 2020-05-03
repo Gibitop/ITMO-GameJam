@@ -50,6 +50,7 @@ func _on_restart_button_pressed():
 	get_tree().change_scene("res://Scenes/MainScene.tscn")
 	
 func _on_main_menu_button_pressed():
+	get_node("/root/AudioPlayer").play_menu_music()
 	get_tree().change_scene("res://Scenes/UI/MainMenuBackground.tscn")
 
 func _on_ToRPG_button_pressed():

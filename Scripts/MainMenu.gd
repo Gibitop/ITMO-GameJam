@@ -18,6 +18,7 @@ func _ready():
 
 func _on_PlayButton_pressed():
 #	get_tree().paused = false
+	get_node("/root/AudioPlayer").play_scene_music()
 	get_tree().change_scene("res://Scenes/MainScene.tscn")
 
 

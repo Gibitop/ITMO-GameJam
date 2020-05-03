@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 UserData="*res://Scripts/UserData.gd"
+AudioPlayer="*res://Audio/AudioPlayer.tscn"
 
 [debug]
 
