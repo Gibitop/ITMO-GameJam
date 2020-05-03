@@ -5,14 +5,13 @@
 [ext_resource path="res://Models/Pointer.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://Scripts/Pointer.gd" type="Script" id=4]
 [ext_resource path="res://motion_blur/motion_blur.tscn" type="PackedScene" id=5]
-[ext_resource path="res://materials/player.tres" type="Material" id=6]
+[ext_resource path="res://materials/projectile.tres" type="Material" id=6]
 
 [sub_resource type="SphereShape" id=1]
 
 [node name="Player" type="Spatial"]
 script = ExtResource( 1 )
 ease_curve = -0.5
-project_tile_count = 12
 default_kill_radius = 1.0
 dashing_kill_radius = 3.0
 DASHING_TIME = 3.0
@@ -40,8 +39,8 @@ mesh = ExtResource( 3 )
 material/0 = ExtResource( 6 )
 script = ExtResource( 4 )
 
-[node name="OmniLight" type="OmniLight" parent="."]
+[node name="OmniLight" type="OmniLight" parent="PlayerBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
-light_color = Color( 0.968627, 0.0352941, 0.952941, 1 )
+light_color = Color( 0.666667, 0, 1, 1 )
 light_energy = 5.0
 omni_range = 250.0
