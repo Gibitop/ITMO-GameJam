@@ -21,6 +21,7 @@ signal score_changed
 signal energy_changed
 signal health_changed
 
+var invincible: bool = false
 var health = max_health;
 var dashing = false
 var dashing_start_time = 0.0
@@ -57,6 +58,8 @@ func heal(amount):
 	
 # Наносит amount урона
 func damage(amount):
+	if invincible:
+		return
 	amount = max(amount, 0)
 	health -= amount
 	emit_signal("health_changed", health)
@@ -118,6 +121,9 @@ func _input(event):
 		and event.is_pressed() \
 		and not event.is_echo():
 			_push_enemies(get_parent().get_all_enemies())
+			invincible = true
+			yield(get_tree().create_timer(0.5), "timeout")
+			invincible = false
 
 
 func _process(delta):
