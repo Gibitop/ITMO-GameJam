@@ -21,6 +21,7 @@ func _ready():
 	player.get_node("PlayerBody").get_node("Pointer").visible = false
 	player.projectile_lifetime = 10
 	player.projectile_count = 9
+	player.energy = 9999
 	player.invincible = true
 	
 	mutation_timer = Timer.new()

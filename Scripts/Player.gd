@@ -76,6 +76,7 @@ func damage(amount):
 	if invincible or health <= 0:
 		return
 	$Camera.shake()
+	$HurtSound.play()
 	amount = max(amount, 0)
 	health -= amount
 	emit_signal("health_changed", health)
@@ -216,6 +217,7 @@ func _process_dash(delta):
 		var estimated_time = DASHING_TIME - dashing_start_time
 		if translation.distance_to(dashing_target.translation) < 1 or not dashing_target.is_active():
 			dashing = false
+			$Camera.shake()
 			_push_enemies(get_parent().get_all_enemies())
 			$Area/CollisionShape.shape.radius = default_kill_radius
 		else:

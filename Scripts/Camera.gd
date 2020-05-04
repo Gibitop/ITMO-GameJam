@@ -1,7 +1,7 @@
 extends Camera
 
-export var amplitude: float = 1
-export var frequency: float = 10
+export var amplitude: float = 3
+export var frequency: float = 20
 export var duration: float = 0.1
 
 var is_shaking = false
