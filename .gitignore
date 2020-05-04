@@ -6,3 +6,7 @@ user/
 fonts/
 
 addons/github-integration
+
+*.exe
+*.pck
+*.x64_86
