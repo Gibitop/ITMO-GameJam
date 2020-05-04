@@ -40,7 +40,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Container"]
 margin_right = 377.0
 margin_bottom = 38.0
-text = "Название этого шедевра"
+text = "3Dash"
 align = 1
 
 [node name="Space1" type="Label" parent="Container"]
