@@ -1,20 +1,28 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/MainMenuBackground.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/MainMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://default_environment.tres" type="Environment" id=3]
 [ext_resource path="res://materials/floor.tres" type="Material" id=4]
+[ext_resource path="res://Scenes/UI/RPGScene.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/UI/Tutorial.tscn" type="PackedScene" id=6]
 
 [node name="MainMenuBackground" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="MainMenu" parent="." instance=ExtResource( 2 )]
 
+[node name="Tutorial" parent="." instance=ExtResource( 6 )]
+visible = false
+
+[node name="RPG" parent="." instance=ExtResource( 5 )]
+visible = false
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 3 )
 
 [node name="CSGBox" type="CSGBox" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, -3, 0 )
 width = 250.0
 height = 0.001
 depth = 250.0

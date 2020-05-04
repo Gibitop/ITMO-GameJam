@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 
 # Declare member variables here. Examples:
@@ -27,4 +27,11 @@ func _on_ExitButton_pressed():
 
 
 func _on_ExitButton3_pressed():
-	get_tree().change_scene("res://Scenes/UI/RPGScene.tscn")
+	get_parent().get_node("RPG").visible = true
+	visible = false
+
+
+func _on_ExitButton2_pressed():
+	get_parent().get_node("Tutorial").visible = true
+	visible = false
+#	get_tree().change_scene("res://Scenes/UI/Tutorial.tscn")

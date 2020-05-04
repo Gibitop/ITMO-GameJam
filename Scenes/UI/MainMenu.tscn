@@ -61,7 +61,7 @@ text = "Играть"
 margin_top = 132.0
 margin_right = 377.0
 margin_bottom = 176.0
-text = "Обучение"
+text = "Как играть"
 
 [node name="ExitButton3" type="Button" parent="Container"]
 margin_top = 180.0
@@ -75,5 +75,6 @@ margin_right = 377.0
 margin_bottom = 272.0
 text = "Выход"
 [connection signal="pressed" from="Container/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Container/ExitButton2" to="." method="_on_ExitButton2_pressed"]
 [connection signal="pressed" from="Container/ExitButton3" to="." method="_on_ExitButton3_pressed"]
 [connection signal="pressed" from="Container/ExitButton" to="." method="_on_ExitButton_pressed"]

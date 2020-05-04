@@ -78,4 +78,5 @@ func _on_BuyPush_pressed():
 
 func _on_ToMenu_pressed():
 	user_data.save()
-	get_tree().change_scene("res://Scenes/UI/MainMenuBackground.tscn")
+	get_parent().get_node("MainMenu").visible = true
+	visible = false
