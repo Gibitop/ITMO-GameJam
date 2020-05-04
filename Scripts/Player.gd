@@ -96,6 +96,9 @@ func _die():
 	get_parent().get_node("GameOver").visible = true
 	_apply_label_text()
 	user_data.set_money(user_data.get_money() + money)
+	update_highscore()
+
+func update_highscore():
 	var high_score = user_data.get_high_score()
 	if high_score < score:
 		emit_signal("highscore_changed", score)
