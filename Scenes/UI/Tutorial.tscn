@@ -1,16 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Themes/MainTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Scenes/UI/Blur.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Tutorial.gd" type="Script" id=3]
+[ext_resource path="res://Fonts/Roboto-Regular.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 4 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 20.0
-margin_right = -20.0
-margin_bottom = -20.0
 theme = ExtResource( 1 )
 script = ExtResource( 3 )
 __meta__ = {
@@ -22,7 +22,7 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.392157 )
+color = Color( 0, 0, 0, 0.784314 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -30,6 +30,10 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -47,5 +51,24 @@ margin_right = 984.0
 margin_bottom = 560.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Your tutorial goes here"
+custom_fonts/normal_font = SubResource( 1 )
+text = "Механики:
+    Dash: Рывок. Целью рывка будет ближайший к курсору ЗЕЛЁНЫЙ враг. В конце дэша применяется отталкивание
+    Отталкивание: Раскидывает ближайших врагов к игроку. 
+    Стрельба: Стреляет снарядами, которые летят по спирали. Количество снарядов за выстрел - определяется прокачкой.
+    Прокачка: Во время игры вы получаете деньги, которые можно потратить на улучшения во вкладке \"Улучшения\"
+
+Управление:
+    ЛКМ - dash в ближайшего к курсору зелёного врага.
+    E - отталкивание врагов (требует заряд энергии)
+    Пробел (SPACE) - стрельба (требует заряд энергии)
+
+Враги:
+    При убийстве любого врага дэшом - даётся 1 заряд энергиии
+    Зелёный:
+        Не представляет опасности
+        К нему можно \"дэшнуться\"
+    Красный:
+        Наносит игроку урон, когда добирается до него и касается
+        Имеет шанс \"мутировать\" и стать зелёным"
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]
